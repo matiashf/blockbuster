@@ -1,12 +1,15 @@
 #include "GameView.hpp"
 
+#include <QGLFormat>
+
 #include <btBulletDynamicsCommon.h>
 
 GameView::GameView(GameScene* scene_, QWidget* parent) :
   QGraphicsView{scene_, parent}
 {
-  // FIXME: Use OpenGl for rendering. Remember destructor.
-  //setViewport(new QGLWidget{QGLFormat(QGL::SampleBuffers)});
+  // Enable OpenGL rendering and use antialiasing
+  setViewport(new QGLWidget{QGLFormat(QGL::SampleBuffers)});
+  // setViewport transfers ownership of QGLWidget, deleted in destructor
 
   // Expand to fill parent container, never go below minimum size
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
