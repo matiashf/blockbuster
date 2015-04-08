@@ -2,15 +2,15 @@
 #include <QtWidgets/QMainWindow>
 
 #include "GameScene.hpp"
-#include "GameWidget.hpp"
+#include "GameView.hpp"
 
 int main(int argc, char *argv[])
 {
     QApplication application{argc, argv};
     GameScene scene;
-    GameWidget widget{&scene};
+    GameView view{&scene};
 
-    widget.showMaximized();
+    view.showMaximized();
 
     return application.exec();
 }

@@ -1,8 +1,8 @@
-#include "GameWidget.hpp"
+#include "GameView.hpp"
 
 #include <btBulletDynamicsCommon.h>
 
-GameWidget::GameWidget(GameScene* scene_, QWidget* parent) :
+GameView::GameView(GameScene* scene_, QWidget* parent) :
   QGraphicsView{scene_, parent}
 {
   // FIXME: Use OpenGl for rendering. Remember destructor.
