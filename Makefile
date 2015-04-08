@@ -1,6 +1,6 @@
 CC=g++
-CCOPT=-std=c++11 -Wall -g -I/usr/include/bullet/
-LDOPT=-l BulletDynamics -l BulletCollision -l LinearMath
+CCOPT=-std=c++11 -Wall -Wno-unused-variable -g -fPIC -I/usr/include/bullet/ -I/usr/include/x86_64-linux-gnu/qt5/
+LDOPT=-l BulletDynamics -l BulletCollision -l LinearMath -l Qt5Widgets
 
 # Headers: .hpp-files
 HEADERS=$(wildcard *.hpp)
