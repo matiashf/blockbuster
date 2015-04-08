@@ -1,9 +1,12 @@
+CONFIG += c++11
+MAKE_CXXFLAGS += -Wall -g
+QT += widgets
+
 HEADERS += $$files(*.hpp)
 SOURCES += $$files(*.cpp)
+SOURCES -= $$files(moc_*.cpp)
 
+# Bullet physics library
 INCLUDEPATH += /usr/include/bullet/
 LIBS += -lBulletDynamics -lBulletCollision -lLinearMath
-
-QMAKE_CXXFLAGS += -std=c++11 #-Wall -Wno-unused-variable -g
-
-QT += widgets
+QMAKE_CXXFLAGS += -Wno-unused-variable
