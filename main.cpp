@@ -7,12 +7,10 @@
 int main(int argc, char *argv[])
 {
     QApplication application{argc, argv};
-    QMainWindow window;
     GameScene scene;
-    GameWidget widget{&scene, &window};
+    GameWidget widget{&scene};
 
-    window.setMinimumSize(widget.minimumSize());
-    window.showMaximized();
+    widget.showMaximized();
 
     return application.exec();
 }
