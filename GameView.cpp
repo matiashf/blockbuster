@@ -15,7 +15,9 @@ GameView::GameView(GameScene* scene_, QWidget* parent) :
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
   setMinimumSize(scene()->width(), scene()->height());
   setFrameShape(QFrame::NoFrame); // Hide 1px border, avoid scrollbars
+}
 
-  fitInView(sceneRect()); // Scale the view to fit the entire scene
-  // FIXME: rescale on resizeEvent(), see http://doc.qt.io/qt-5/qgraphicsview.html#fitInView
+void GameView::resizeEvent(QResizeEvent * event) {
+  // Scale the view to fit the entire scene
+  fitInView(sceneRect(), Qt::KeepAspectRatio);
 }

@@ -10,6 +10,7 @@ class GameView : public QGraphicsView {
 
 public:
   GameView(GameScene* scene, QWidget* parent=0);
+  void resizeEvent(QResizeEvent *);
 };
 
 #endif
