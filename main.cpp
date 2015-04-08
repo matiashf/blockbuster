@@ -1,13 +1,22 @@
-#include "btBulletDynamicsCommon.h"
+#include <btBulletDynamicsCommon.h>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 
+#include <QtWidgets/QGraphicsView>
+
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    QMainWindow w;
-    w.show();
+    QApplication application(argc, argv);
 
-    return a.exec();
+    QMainWindow window;
+
+    QGraphicsView widget{&window};
+    widget.setMinimumSize(800, 600); // width, height
+    widget.setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding); // Expand to fill parent container
+
+    window.setMinimumSize(widget.minimumSize());
+    window.showMaximized();
+
+    return application.exec();
 }
