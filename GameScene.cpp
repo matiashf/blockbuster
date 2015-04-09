@@ -9,11 +9,13 @@ GameScene::GameScene(QObject* parent) :
   dispatcher{&configuration},
   world{&dispatcher, &broadphase, &solver, &configuration}
 {
-  timer->start(1000.0 / 60.0); // 60 FPS => ~16 msec time period
+  world.setGravity(btVector3{0, -9.81, 0}); // Earth gravity
+
   connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
   /* If advance() exceeds its designated time slice, QTimer will skip
      timeout()-events. Effectively this gives variable frame rate by
      simply dropping frames. */
+  timer->start(1000.0 / 60.0); // 60 FPS => ~16 msec time period
 
   addItem(new Ball{});
 }
