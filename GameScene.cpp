@@ -1,5 +1,6 @@
 #include "GameScene.hpp"
 #include "Ball.hpp"
+#include "Box.hpp"
 
 GameScene::GameScene(QObject* parent) :
   QGraphicsScene{0, 0, 1920, 1080, parent}, // x, y, width, height. Full HD.
@@ -17,6 +18,7 @@ GameScene::GameScene(QObject* parent) :
   timer->start(1000.0 / 60.0); // 60 FPS => ~16 msec time period
 
   addItem(new Ball{width() / 2, height() / 2, 5});
+  addItem(new Box{width() / 2, height() / 2, 10, 10});
 }
 
 void GameScene::advance() {
