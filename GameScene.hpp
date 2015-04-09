@@ -2,12 +2,15 @@
 #define GAME_SCENE_HPP
 
 #include <QtWidgets/QGraphicsScene>
+#include <QTimer>
+#include <QTime>
 #include <btBulletDynamicsCommon.h>
 
 class GameScene: public QGraphicsScene {
   Q_OBJECT
 private:
-  QTimer* timer;
+  QTimer* timer; // Periodic event dispatcher
+  QTime timeAccumulator; // Clock
 
   /* Bullet is a constraint-based physics engine, like this:
      http://allenchou.net/2013/12/game-physics-constraints-sequential-impulse
