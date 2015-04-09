@@ -1,6 +1,6 @@
 CONFIG += c++11
 MAKE_CXXFLAGS += -Wall -g
-QT += widgets opengl
+QT += gui widgets opengl
 
 HEADERS += $$files(*.hpp)
 SOURCES += $$files(*.cpp)
