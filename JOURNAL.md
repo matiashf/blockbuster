@@ -23,6 +23,10 @@ The game currently draws a black ball at a fixed position.
 
 ## 2015-04-09 Periodic rendering and physics simulation
 
-Read about [how to coordinate physics simulation and periodic
+Read article on [how to coordinate physics simulation and periodic
 drawing](http://gafferongames.com/game-physics/fix-your-timestep/ "Fix
-Your Timestep!").
+Your Timestep!"). Implemented periodic rendering at 60 FPS (with frame
+dropping).
+
+The game currently moves a black ball with constant speed.
+
