@@ -2,8 +2,6 @@
 
 #include <QGLFormat>
 
-#include <btBulletDynamicsCommon.h>
-
 GameView::GameView(GameScene* scene_, QWidget* parent) :
   QGraphicsView{scene_, parent}
 {
