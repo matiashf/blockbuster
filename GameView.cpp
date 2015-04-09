@@ -18,6 +18,7 @@ GameView::GameView(GameScene* scene_, QWidget* parent) :
 void GameView::resizeEvent(QResizeEvent * event) {
   // Scale the view to fit the entire scene
   fitInView(sceneRect(), Qt::KeepAspectRatio);
+  Q_UNUSED(event); // Supress compiler warning about unused variable
 }
 
 void GameView::keyPressEvent(QKeyEvent* event) {
