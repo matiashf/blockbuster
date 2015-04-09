@@ -8,13 +8,13 @@ GameScene::GameScene(QObject* parent) :
   world{&dispatcher, &broadphase, &solver, &configuration}
 {
   world.setGravity(btVector3{0, -9.81, 0}); // Earth gravity
+  timeAccumulator.start(); // For synchronizing the physics engine with real time
 
   connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
   /* If advance() exceeds its designated time slice, QTimer will skip
      timeout()-events. Effectively this gives variable frame rate by
      simply dropping frames. */
   timer->start(1000.0 / 60.0); // 60 FPS => ~16 msec time period
-  timeAccumulator.start(); // For synchronizing the physics engine with real time
 
   addItem(new Ball{});
 }
