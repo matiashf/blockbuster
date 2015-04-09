@@ -16,7 +16,7 @@ GameScene::GameScene(QObject* parent) :
      simply dropping frames. */
   timer->start(1000.0 / 60.0); // 60 FPS => ~16 msec time period
 
-  addItem(new Ball{});
+  addItem(new Ball{width() / 2, height() / 2, 5});
 }
 
 void GameScene::advance() {

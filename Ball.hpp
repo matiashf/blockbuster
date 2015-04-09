@@ -5,7 +5,8 @@
 
 class Ball : public QGraphicsEllipseItem {
 public:
-  Ball();
+  Ball(qreal x, qreal y, qreal radius);
+protected slots:
   void advance(int phase) override;
 };
 

@@ -2,8 +2,8 @@
 
 #include <QBrush>
 
-Ball::Ball() :
-  QGraphicsEllipseItem{0, 0, 50, 50}
+Ball::Ball(qreal x, qreal y, qreal radius) :
+  QGraphicsEllipseItem{x, y, radius * 2, radius * 2}
 {
   setBrush(QBrush{Qt::black});
 }
