@@ -5,7 +5,8 @@
 
 class GameScene: public QGraphicsScene {
   Q_OBJECT
-
+private:
+  QTimer* timer;
 public:
   GameScene(QObject* parent=0);
 };
