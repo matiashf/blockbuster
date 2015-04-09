@@ -1,5 +1,4 @@
 CONFIG += c++11
-MAKE_CXXFLAGS += -Wall -g
 QT += core gui widgets opengl
 
 HEADERS += $$files(*.hpp)
@@ -9,4 +8,3 @@ SOURCES -= $$files(moc_*.cpp)
 # Bullet physics library
 INCLUDEPATH += /usr/include/bullet/
 LIBS += -lBulletDynamics -lBulletCollision -lLinearMath
-QMAKE_CXXFLAGS += -Wno-unused-variable
