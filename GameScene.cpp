@@ -4,7 +4,7 @@
 #include <QTimer>
 
 GameScene::GameScene(QObject* parent) :
-  QGraphicsScene{0, 0, 1280, 720, parent}, // x, y, width, height
+  QGraphicsScene{0, 0, 1920, 1080, parent}, // x, y, width, height. Full HD.
   timer{new QTimer{this}}
 {
   timer->start(1000.0 / 60.0); // 60 FPS => ~16 msec time period

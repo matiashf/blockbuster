@@ -13,7 +13,7 @@ GameView::GameView(GameScene* scene_, QWidget* parent) :
 
   // Expand to fill parent container, never go below minimum size
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-  setMinimumSize(scene()->width(), scene()->height());
+  setMinimumSize(1280, 720); // HD resolution
   setFrameShape(QFrame::NoFrame); // Hide 1px border, avoid scrollbars
 }
 
