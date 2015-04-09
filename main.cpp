@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     GameScene scene;
     GameView view{&scene};
 
-    view.showMaximized();
+    view.showFullScreen();
 
     return application.exec();
 }

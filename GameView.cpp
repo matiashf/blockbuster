@@ -21,3 +21,16 @@ void GameView::resizeEvent(QResizeEvent * event) {
   // Scale the view to fit the entire scene
   fitInView(sceneRect(), Qt::KeepAspectRatio);
 }
+
+void GameView::keyPressEvent(QKeyEvent* event) {
+  switch (event->key()) {
+  case Qt::Key_F:
+    showFullScreen();
+    break;
+  case Qt::Key_Escape:
+    showNormal();
+    break;
+  default:
+    event->ignore();
+  }
+}
