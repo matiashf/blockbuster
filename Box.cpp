@@ -16,3 +16,11 @@ void Box::advance(int phase) {
 
   // FIXME: Obtain position from physics world
 }
+
+QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
+  // TODO: Handle item being removed from scene
+  if (change == QGraphicsItem::ItemSceneHasChanged) {
+    // FIXME: Add to new scene world
+  }
+  return value;
+}
