@@ -4,7 +4,7 @@ C++ programming project spring 2015
 ## Building
 
 ```shell
-sudo apt-get install qmake qtdeclarative5-dev libbullet-dev
+sudo apt-get install qmake qtdeclarative5-dev
 qmake # Generate Makefile
 make
 ```

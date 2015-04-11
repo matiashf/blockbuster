@@ -4,11 +4,9 @@
 
 GameScene::GameScene(QObject* parent) :
   QGraphicsScene{0, 0, 1920, 1080, parent}, // x, y, width, height. Full HD.
-  timer{new QTimer{this}},
-  dispatcher{&configuration},
-  world{&dispatcher, &broadphase, &solver, &configuration}
+  timer{new QTimer{this}}
 {
-  world.setGravity(btVector3{0, -9.81, 0}); // Earth gravity
+  // FIXME: Apply Earth gravity
   timeAccumulator.start(); // For synchronizing the physics engine with real time
 
   connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
@@ -22,7 +20,7 @@ GameScene::GameScene(QObject* parent) :
 }
 
 void GameScene::advance() {
-  world.stepSimulation(timeAccumulator.restart());
+  // FIXME: Advance world simulation by timeAccumulator.restart() milliseconds
 
   QGraphicsScene::advance(); // Advance items, i.e. render
 }
