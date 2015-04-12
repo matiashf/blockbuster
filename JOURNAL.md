@@ -28,5 +28,25 @@ drawing](http://gafferongames.com/game-physics/fix-your-timestep/ "Fix
 Your Timestep!"). Implemented periodic rendering at 60 FPS (with frame
 dropping).
 
-The game currently moves a black ball with constant speed.
+Did basic integration with bullet. Created a physics world and applied
+gravity constraints. No objects in the world.
 
+The game currently shows a box in a fixed position and moves a black
+ball with constant speed.
+
+## 2015-04-10 End of prototype phase, ditching Bullet
+
+Attempted to integrate bullet, but ran into several problems:
+* Bullet is a 3D engine. Applying 2D-constraints is possible, but non-trivial.
+* The source code contains a mix of both working and unfinished
+  code. Googling, I found a post by one of the authors mentioning that
+  "that class is unfinished, and should not be used."
+* The documentation is severely lacking, and the examples are hard to
+  read.
+
+In conclusion, I've decided to avoid using bullet. If I had a 3D
+background I might find the concepts easier to grasp. But I don't, so
+I won't.
+
+Instead, I will use box2d. It seems to be the most promising OSS
+candidate for 2D physics simulation.
