@@ -1,4 +1,4 @@
 *.o
-main
+/blockbuster
 Makefile
 moc_*.cpp
