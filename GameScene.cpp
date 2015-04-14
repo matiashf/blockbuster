@@ -2,11 +2,16 @@
 #include "Ball.hpp"
 #include "Box.hpp"
 
+// The meaning of these constants are explained in the header file.
+const int GameScene::kMaxVelocityIterations = 1;
+const int GameScene::kMaxPositionIterations = 1;
+
 GameScene::GameScene(QObject* parent) :
   QGraphicsScene{0, 0, 1920, 1080, parent}, // x, y, width, height. Full HD.
-  timer{new QTimer{this}}
+  timer{new QTimer{this}},
+  gravity{0.0f, -9.81f}, // Earth gravity
+  world{gravity}
 {
-  // FIXME: Apply Earth gravity
   timeAccumulator.start(); // For synchronizing the physics engine with real time
 
   connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
@@ -20,7 +25,9 @@ GameScene::GameScene(QObject* parent) :
 }
 
 void GameScene::advance() {
-  // FIXME: Advance world simulation by timeAccumulator.restart() milliseconds
+  // The timeAccumulator returns milliseconds, but the step function takes seconds
+  world.Step(timeAccumulator.restart() / 1000.0f,
+             kMaxVelocityIterations, kMaxPositionIterations);
 
   QGraphicsScene::advance(); // Advance items, i.e. render
 }
