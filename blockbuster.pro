@@ -6,5 +6,5 @@ SOURCES += $$files(*.cpp)
 SOURCES -= $$files(moc_*.cpp)
 
 # Bullet physics library
-INCLUDEPATH += /usr/include/bullet/
-LIBS += -lBulletDynamics -lBulletCollision -lLinearMath
+INCLUDEPATH += /usr/include/Box2D/
+LIBS += -lBox2D

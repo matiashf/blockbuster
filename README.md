@@ -4,7 +4,7 @@ C++ programming project spring 2015
 ## Building
 
 ```shell
-sudo apt-get install qmake qtdeclarative5-dev
+sudo apt-get install qmake qtdeclarative5-dev libbox2d-dev
 qmake # Generate Makefile
 make
 ```
