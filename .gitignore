@@ -2,3 +2,4 @@
 /blockbuster
 Makefile
 moc_*.cpp
+qrc_*.cpp
