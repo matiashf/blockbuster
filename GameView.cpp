@@ -29,6 +29,9 @@ void GameView::keyPressEvent(QKeyEvent* event) {
   case Qt::Key_Escape:
     showNormal();
     break;
+  case Qt::Key_Q:
+    close();
+    break;
   default:
     event->ignore();
   }
