@@ -1,4 +1,5 @@
 CONFIG += c++11
+CONFIG += debug
 QT += core gui widgets opengl
 
 HEADERS += $$files(*.hpp)
