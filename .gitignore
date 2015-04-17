@@ -1,6 +1,4 @@
-*.o
-/blockbuster
+/build
+/bin
 Makefile
-moc_*.cpp
-qrc_*.cpp
-.vagrant
+/.vagrant
