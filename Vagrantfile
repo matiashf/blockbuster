@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     blockbuster.vm.provision "shell",
-      inline: "apt-get install --yes --quiet qt5-qmake qtdeclarative5-dev libbox2d-dev qt5-default g++ gdb"
+      inline: "apt-get install --yes --quiet qt5-qmake qtdeclarative5-dev libbox2d-dev qt5-default g++ gdb libgtest-dev"
 
     blockbuster.ssh.forward_x11 = true
   end

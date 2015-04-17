@@ -4,7 +4,7 @@ C++ programming project spring 2015
 ## Building and running
 
 ```shell
-sudo apt-get install qt5-qmake qtdeclarative5-dev libbox2d-dev qt5-default g++ gdb
+sudo apt-get install qt5-qmake qtdeclarative5-dev libbox2d-dev qt5-default g++ gdb libgtest-dev
 qmake # Generate Makefile
 make
 ./blockbuster
