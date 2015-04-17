@@ -5,7 +5,7 @@
 Box::Box(qreal x, qreal y, qreal width, qreal height) :
   // Interpret x and y arguments as the *top left corner of the box*,
   // not the center.
-  QGraphicsRectItem{x - width / 2.0f, y - height / 2.0f, width, height},
+  QGraphicsRectItem{x + width / 2.0f, y + height / 2.0f, width, height},
   body{nullptr}
 {
   setBrush(QBrush{Qt::white});
