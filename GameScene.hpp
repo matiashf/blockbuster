@@ -17,6 +17,7 @@ private:
      http://allenchou.net/2013/12/game-physics-constraints-sequential-impulse */
   b2Vec2 gravity;
   b2World world_;
+  const qreal worldScale; // in world meters per scene pixel
 
   /* The constants below are given as arguments to the box2d world step
      function, and set the maximum number of iterations allowed during
@@ -30,10 +31,27 @@ private:
   static const int kMaxVelocityIterations;
   static const int kMaxPositionIterations;
 
+  // For calculating worldScale, we set the number of seconds it takes
+  // an object to free fall from the top to the bottom of the screen.
+  static const float kScaleFactor;
 public:
   GameScene(QObject* parent=0);
 
   inline b2World* world() { return &world_; }
+
+  // Convenience functions for mapping between world and scene coordinates
+  inline float32 mapToWorld(qreal scalar) { return scalar * worldScale; }
+  inline qreal mapFromWorld(float32 scalar) { return scalar / worldScale; }
+  inline b2Vec2 mapToWorld(const QPointF & vector) {
+    return b2Vec2{mapToWorld(vector.x()), mapToWorld(vector.y())};
+  }
+  inline QPointF mapFromWorld(const b2Vec2 & vector) {
+    return QPointF{mapFromWorld(vector.x), mapFromWorld(vector.y)};
+  }
+  inline b2Vec2 mapToWorld(qreal x, qreal y) {
+    return b2Vec2{mapToWorld(x), mapToWorld(y)};
+  }
+
 public slots:
   void advance();
 };
