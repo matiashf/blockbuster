@@ -24,7 +24,6 @@ GameScene::GameScene(QObject* parent) :
   /* If advance() exceeds its designated time slice, QTimer will skip
      timeout()-events. Effectively this gives variable frame rate by
      simply dropping frames. */
-  start();
 }
 
 void GameScene::start() {
