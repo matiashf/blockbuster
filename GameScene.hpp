@@ -16,7 +16,7 @@ private:
   /* Use a constraint-based physics engine, like this:
      http://allenchou.net/2013/12/game-physics-constraints-sequential-impulse */
   b2Vec2 gravity;
-  b2World world;
+  b2World world_;
 
   /* The constants below are given as arguments to the box2d world step
      function, and set the maximum number of iterations allowed during
@@ -32,6 +32,8 @@ private:
 
 public:
   GameScene(QObject* parent=0);
+
+  inline b2World* world() { return &world_; }
 public slots:
   void advance();
 };

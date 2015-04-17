@@ -10,7 +10,7 @@ GameScene::GameScene(QObject* parent) :
   QGraphicsScene{0, 0, 1920, 1080, parent}, // x, y, width, height. Full HD.
   timer{new QTimer{this}},
   gravity{0.0f, 9.81f}, // Earth gravity
-  world{gravity}
+  world_{gravity},
 {
   timeAccumulator.start(); // For synchronizing the physics engine with real time
   setBackgroundBrush(QBrush{Qt::black});
@@ -27,7 +27,7 @@ GameScene::GameScene(QObject* parent) :
 
 void GameScene::advance() {
   // The timeAccumulator returns milliseconds, but the step function takes seconds
-  world.Step(timeAccumulator.restart() / 1000.0f,
+  world()->Step(timeAccumulator.restart() / 1000.0f,
              kMaxVelocityIterations, kMaxPositionIterations);
 
   QGraphicsScene::advance(); // Advance items, i.e. render
