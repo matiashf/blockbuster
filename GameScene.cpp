@@ -9,7 +9,7 @@ const int GameScene::kMaxPositionIterations = 1;
 GameScene::GameScene(QObject* parent) :
   QGraphicsScene{0, 0, 1920, 1080, parent}, // x, y, width, height. Full HD.
   timer{new QTimer{this}},
-  gravity{0.0f, -9.81f}, // Earth gravity
+  gravity{0.0f, 9.81f}, // Earth gravity
   world{gravity}
 {
   timeAccumulator.start(); // For synchronizing the physics engine with real time
