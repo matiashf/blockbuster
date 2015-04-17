@@ -13,6 +13,7 @@ GameScene::GameScene(QObject* parent) :
   world{gravity}
 {
   timeAccumulator.start(); // For synchronizing the physics engine with real time
+  setBackgroundBrush(QBrush{Qt::black});
 
   connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
   /* If advance() exceeds its designated time slice, QTimer will skip

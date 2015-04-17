@@ -5,7 +5,7 @@
 Ball::Ball(qreal x, qreal y, qreal radius) :
   QGraphicsEllipseItem{x, y, radius * 2, radius * 2}
 {
-  setBrush(QBrush{Qt::black});
+  setBrush(QBrush{Qt::white});
 }
 
 void Ball::advance(int phase) {

@@ -5,7 +5,7 @@
 Box::Box(qreal x, qreal y, qreal width, qreal height) :
   QGraphicsRectItem{x, y, width, height}
 {
-  setBrush(QBrush{Qt::black});
+  setBrush(QBrush{Qt::white});
 }
 
 void Box::advance(int phase) {
