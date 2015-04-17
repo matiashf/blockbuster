@@ -16,13 +16,13 @@ GameScene::GameScene(QObject* parent) :
   world_{gravity},
   worldScale{ 0.5f * gravity.y * pow(kScaleFactor, 2) / height()} // meters/pixel
 {
-  timeAccumulator.start(); // For synchronizing the physics engine with real time
   setBackgroundBrush(QBrush{Qt::black});
 
   connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
   /* If advance() exceeds its designated time slice, QTimer will skip
      timeout()-events. Effectively this gives variable frame rate by
      simply dropping frames. */
+  timeAccumulator.start(); // For synchronizing the physics engine with real time
   timer->start(1000.0 / 60.0); // 60 FPS => ~16 msec time period
 }
 
