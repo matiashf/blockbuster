@@ -11,7 +11,7 @@ class GameScene: public QGraphicsScene {
   Q_OBJECT
 private:
   QTimer* timer; // Periodic event dispatcher
-  QTime timeAccumulator; // Clock
+  QTime timeAccumulator; // Clock for synchronizing the physics world with real time
 
   /* Use a constraint-based physics engine, like this:
      http://allenchou.net/2013/12/game-physics-constraints-sequential-impulse */
@@ -34,6 +34,9 @@ private:
   // For calculating worldScale, we set the number of seconds it takes
   // an object to free fall from the top to the bottom of the screen.
   static const float kScaleFactor;
+
+  // The number of times per seconds advance() should be called
+  static const qreal kFrameRate;
 public:
   GameScene(QObject* parent=0);
 
@@ -53,6 +56,9 @@ public:
   }
 
 public slots:
+  void start();
+  void stop();
+  void toggle();
   void advance();
 };
 
