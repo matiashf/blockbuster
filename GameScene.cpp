@@ -27,7 +27,7 @@ GameScene::GameScene(QObject* parent) :
 }
 
 void GameScene::start() {
-  timeAccumulator.start();
+  worldTime.start();
   timer->start(); // Start calling advance()
 }
 
@@ -43,8 +43,8 @@ void GameScene::toggle() {
 }
 
 void GameScene::advance() {
-  // The timeAccumulator returns milliseconds, but the step function takes seconds
-  world()->Step(timeAccumulator.restart() / 1000.0f,
+  // worldTime returns milliseconds, but the step function takes seconds
+  world()->Step(worldTime.restart() / 1000.0f,
              kMaxVelocityIterations, kMaxPositionIterations);
 
   QGraphicsScene::advance(); // Advance items, i.e. render

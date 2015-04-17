@@ -11,7 +11,7 @@ class GameScene: public QGraphicsScene {
   Q_OBJECT
 private:
   QTimer* timer; // Periodic event dispatcher
-  QTime timeAccumulator; // Clock for synchronizing the physics world with real time
+  QTime worldTime; // Clock for synchronizing the physics world with real time
 
   /* Use a constraint-based physics engine, like this:
      http://allenchou.net/2013/12/game-physics-constraints-sequential-impulse */
