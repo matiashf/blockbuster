@@ -7,7 +7,7 @@ C++ programming project spring 2015
 sudo apt-get install qt5-qmake qtdeclarative5-dev libbox2d-dev qt5-default g++ gdb libgtest-dev
 qmake # Generate Makefile
 make
-./blockbuster
+bin/blockbuster
 ```
 
 ## Building and running on Ubuntu 14.04 with vagrant
@@ -17,7 +17,14 @@ vagrant up
 vagrant ssh
 cd /vagrant
 qmake && make clean all
-./blockbuster
+bin/blockbuster
+```
+
+## Running tests
+
+```shell
+qmake
+make test
 ```
 
 ## Inspiration
