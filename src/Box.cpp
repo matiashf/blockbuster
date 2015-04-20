@@ -3,12 +3,17 @@
 #include <QBrush>
 
 Box::Box(qreal x, qreal y, qreal width, qreal height) :
-  // Interpret x and y arguments as the *top left corner of the box*,
-  // not the center.
-  QGraphicsRectItem{x + width / 2.0f, y + height / 2.0f, width, height},
+  // The (x, y)-coordinates given to the parent constructor below
+  // specify where the center of the box is drawn relative to the box
+  // reference system. Essentially, this makes it so that when we talk
+  // about where the box is positioned in scene coordinates, we mean
+  // specifically the center of the box.
+  QGraphicsRectItem{width / 2.0f, height / 2.0f, width, height},
   body{nullptr}
 {
   setBrush(QBrush{Qt::white});
+  // Position the top left corner of the box at scene coordinates (x, y)
+  setPos(x + width / 2.0f, y + height / 2.0f);
 }
 
 Box::~Box() {
