@@ -8,6 +8,7 @@ TARGET = test
 INCLUDEPATH += /usr/src/gtest/
 HEADERS += $$files(/usr/src/gtest/src/*.h)
 SOURCES += $$files(/usr/src/gtest/src/*.cc)
+SOURCES -= /usr/src/gtest/src/gtest_main.cc
 
 HEADERS += $$files(*.hpp)
 SOURCES += $$files(*.cpp)
