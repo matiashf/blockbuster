@@ -35,6 +35,9 @@ void GameView::keyPressEvent(QKeyEvent* event) {
   case Qt::Key_Space:
     ((GameScene *) scene())->toggle();
     break;
+  case Qt::Key_S:
+    ((GameScene *) scene())->advance(10.0d); // milliseconds
+    break;
   default:
     event->ignore();
   }

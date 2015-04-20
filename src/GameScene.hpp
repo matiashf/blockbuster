@@ -59,6 +59,7 @@ public slots:
   void start();
   void stop();
   void toggle();
+  void advance(qreal milliseconds);
   void advance();
 };
 

@@ -42,10 +42,13 @@ void GameScene::toggle() {
     start();
 }
 
-void GameScene::advance() {
-  // worldTime returns milliseconds, but the step function takes seconds
-  world()->Step(worldTime.restart() / 1000.0f,
-             kMaxVelocityIterations, kMaxPositionIterations);
+void GameScene::advance(qreal milliseconds) {
+  world()->Step(milliseconds / 1000.0f, // The Step function takes seconds
+                kMaxVelocityIterations, kMaxPositionIterations);
 
-  QGraphicsScene::advance(); // Advance items, i.e. render
+  QGraphicsScene::advance(); // Advance items, i.e. update positions and render
+}
+
+void GameScene::advance() {
+  advance(worldTime.restart());
 }
