@@ -3,17 +3,23 @@
 #include <QBrush>
 
 Box::Box(qreal x, qreal y, qreal width, qreal height) :
-  // The (x, y)-coordinates given to the parent constructor below
-  // specify where the center of the box is drawn relative to the box
-  // reference system. Essentially, this makes it so that when we talk
-  // about where the box is positioned in scene coordinates, we mean
-  // specifically the center of the box.
-  QGraphicsRectItem{width / 2.0f, height / 2.0f, width, height},
+  // The (x, y) scene coordinates above specify where the top left
+  // corner of the box is drawn. This is helpful for when we create
+  // boxes on the scene based on a grid in a text file.
+
+  // However, to simplify integration with Box2D (which might revolve
+  // rotation around the center of mass), we specify that the box
+  // reference system originate in the center of the box. Since the
+  // box has uniform weight distribution, this is also the center of
+  // mass.
+
+  // Determine where the box is drawn relative to its origin
+  QGraphicsRectItem{-width / 2.0d, -height / 2.0d, width, height},
   body{nullptr}
 {
   setBrush(QBrush{Qt::white});
-  // Position the top left corner of the box at scene coordinates (x, y)
-  setPos(x + width / 2.0f, y + height / 2.0f);
+  // Determine where the box origin is situated relative to the scene origin
+  setPos(x + width / 2, y + height / 2);
 }
 
 Box::~Box() {

@@ -21,8 +21,8 @@ private:
 public:
   Box(qreal x, qreal y, qreal width, qreal height);
   ~Box();
-  inline qreal width() { return rect().x() * 2.0d; };
-  inline qreal height() { return rect().y() * 2.0d; };
+  inline qreal width() { return rect().width(); };
+  inline qreal height() { return rect().height(); };
 protected slots:
   void advance(int phase) override;
   QVariant itemChange(GraphicsItemChange change, const QVariant & value);
