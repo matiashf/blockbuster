@@ -1,5 +1,6 @@
 #include "Box.hpp"
 
+#include <cmath> // M_PI
 #include <QBrush>
 
 Box::Box(qreal x, qreal y, qreal width, qreal height) :
@@ -36,8 +37,10 @@ void Box::advance(int phase) {
 
   if (phase == 0) return;
 
-  if (body != nullptr and body->IsAwake())
+  if (body != nullptr and body->IsAwake()) {
     setPos(gameScene()->mapFromWorld(body->GetPosition()));
+    setRotation(radiansToDegrees(body->GetAngle()));
+  }
 }
 
 QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
