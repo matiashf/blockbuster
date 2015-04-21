@@ -44,8 +44,8 @@ QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
   // TODO: Handle item being removed from scene
   if (change == QGraphicsItem::ItemSceneHasChanged) {
     b2PolygonShape* shape = new b2PolygonShape;
-    shape->SetAsBox(gameScene()->mapToWorld(width()),
-                    gameScene()->mapToWorld(height()));
+    shape->SetAsBox(gameScene()->mapToWorld(width() / 2.0d),
+                    gameScene()->mapToWorld(height() / 2.0d));
     fixtureDef.density = 1;
     fixtureDef.restitution = 0.5f;
     fixtureDef.shape = shape;
