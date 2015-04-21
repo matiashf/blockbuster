@@ -32,6 +32,9 @@ GameScene::GameScene(QObject* parent) :
   /* If advance() exceeds its designated time slice, QTimer will skip
      timeout()-events. Effectively this gives variable frame rate by
      simply dropping frames. */
+
+  for (int i = 0; i < 100; ++i)
+    addItem(new Box{float(rand() % (int(width()) - 50)), float(rand() % (int(height()) - 50)), 50.0f, 50.0f});
 }
 
 /** Create a static (non-moving) line between the two points. Used to
