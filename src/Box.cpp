@@ -18,7 +18,9 @@ Box::Box(qreal x, qreal y, qreal width, qreal height) :
   QGraphicsRectItem{-width / 2.0d, -height / 2.0d, width, height},
   body{nullptr}
 {
-  setBrush(QBrush{Qt::white});
+  QColor color{float(rand() % 255), float(rand() % 255), float(rand() % 255)};
+  setBrush(QBrush{color});
+  setPen(QPen{color});
   // Determine where the box origin is situated relative to the scene origin
   setPos(x + width / 2, y + height / 2);
 }
