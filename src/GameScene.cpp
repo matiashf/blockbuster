@@ -2,7 +2,8 @@
 #include "Ball.hpp"
 #include "Box.hpp"
 
-#include <cmath>
+#include <Box2D.h>
+#include <cmath> // pow
 
 // The meaning of these constants are explained in the header file.
 const int GameScene::kMaxVelocityIterations = 1;
@@ -19,11 +20,29 @@ GameScene::GameScene(QObject* parent) :
 {
   setBackgroundBrush(QBrush{Qt::black});
 
+  // Create static edges for the world, so that objects can't fall out.
+  QRectF r = sceneRect();
+  addEdgeLine(r.topLeft(), r.topRight());
+  addEdgeLine(r.bottomLeft(), r.bottomRight());
+  addEdgeLine(r.topLeft(), r.bottomLeft());
+  addEdgeLine(r.topRight(), r.bottomRight());
+
   timer->setInterval(1000.0 / kFrameRate);
   connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
   /* If advance() exceeds its designated time slice, QTimer will skip
      timeout()-events. Effectively this gives variable frame rate by
      simply dropping frames. */
+}
+
+/** Create a static (non-moving) line between the two points. Used to
+    create bounds for the scene (i.e. ground, walls and ceiling). */
+void GameScene::addEdgeLine(QPointF from, QPointF to) {
+  b2BodyDef edgeBodyDef;
+  edgeBodyDef.position = mapToWorld(from);
+  b2Body* edgeBody = world()->CreateBody(&edgeBodyDef); // FIXME: Free memory
+  b2EdgeShape edgeShape;
+  edgeShape.Set(b2Vec2(0,0), mapToWorld(to - from));
+  edgeBody->CreateFixture(&edgeShape, 0.0f);
 }
 
 void GameScene::start() {
