@@ -14,14 +14,12 @@
 
 class Box : public QGraphicsRectItem {
 private:
-  b2FixtureDef fixtureDef;
   b2Body* body;
 
   inline GameScene* gameScene() {return dynamic_cast<GameScene*>(scene());}
   inline qreal radiansToDegrees(qreal radians) { return radians * 180.0d / M_PI; }
 public:
   Box(qreal x, qreal y, qreal width, qreal height);
-  ~Box();
   inline qreal width() { return rect().width(); };
   inline qreal height() { return rect().height(); };
 protected slots:

@@ -23,14 +23,6 @@ Box::Box(qreal x, qreal y, qreal width, qreal height) :
   setPos(x + width / 2, y + height / 2);
 }
 
-Box::~Box() {
-  delete fixtureDef.shape;
-  fixtureDef.shape = nullptr;
-  // TODO: Delete body from world?
-  //gameScene()->world()->DestroyBody(body);
-  //body = nullptr;
-}
-
 void Box::advance(int phase) {
   // phase 0: The scene is about to advance
   // phase 1: The scene is advancing
@@ -46,19 +38,28 @@ void Box::advance(int phase) {
 QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
   // TODO: Handle item being removed from scene
   if (change == QGraphicsItem::ItemSceneHasChanged) {
-    b2PolygonShape* shape = new b2PolygonShape;
-    shape->SetAsBox(gameScene()->mapToWorld(width() / 2.0d),
-                    gameScene()->mapToWorld(height() / 2.0d));
-    fixtureDef.density = 1;
-    fixtureDef.restitution = 0.5f;
-    fixtureDef.shape = shape;
-
+    // Create a Box2D body using a temporary body definition
     b2BodyDef bodyDef;
-    bodyDef.userData = reinterpret_cast<void*>(this);
+    bodyDef.userData = reinterpret_cast<void*>(this); // For collision callbacks
     bodyDef.type = b2_dynamicBody;
     bodyDef.position = gameScene()->mapToWorld(scenePos());
     body = gameScene()->world()->CreateBody(&bodyDef); // Copies content of bodyDef
-    body->CreateFixture(&fixtureDef); // FIXME: Check that this doesn't leak memory
+
+    // Attach a fixture (with a shape) to the body using a temporary
+    // fixture definition.
+    b2PolygonShape shape;
+    shape.SetAsBox(gameScene()->mapToWorld(width() / 2.0d),
+                   gameScene()->mapToWorld(height() / 2.0d));
+    b2FixtureDef fixtureDef;
+    fixtureDef.density = 1.0f;
+    fixtureDef.restitution = 0.1f;
+    fixtureDef.shape = &shape;
+    body->CreateFixture(&fixtureDef); // Deep copies fixtureDef.
+
+    // The shape is owned by the fixture, the fixture is owned by the
+    // body, the body is owned by the world, and the world is owned by
+    // the scene. No further memory management is required in this
+    // class.
   }
   return value;
 }
