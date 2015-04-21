@@ -14,5 +14,7 @@ TEST_F(GameSceneTest, world_has_ground) {
   scene.addItem(box);
   double originalVerticalPosition = box->y();
   scene.advance(1000.0d); // milliseconds
-  EXPECT_DOUBLE_EQ(originalVerticalPosition, box->y());
+  // Allow some leeway in the position. Box2D allows shapes to overlap
+  // slightly. Less than 1 pixel movement is acceptable.
+  EXPECT_NEAR(originalVerticalPosition, box->y(), 1.0f);
 }
