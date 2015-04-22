@@ -45,6 +45,7 @@ QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
     bodyDef.userData = reinterpret_cast<void*>(this); // For collision callbacks
     bodyDef.type = b2_dynamicBody;
     bodyDef.position = gameScene()->mapToWorld(scenePos());
+    bodyDef.angularDamping = 1.0f; // Increase the angular inertia (i.e. spin less)
     body = gameScene()->world()->CreateBody(&bodyDef); // Copies content of bodyDef
 
     // Attach a fixture (with a shape) to the body using a temporary
