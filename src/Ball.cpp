@@ -3,9 +3,10 @@
 #include <QBrush>
 
 Ball::Ball(qreal x, qreal y, qreal radius) :
-  QGraphicsEllipseItem{x, y, radius * 2, radius * 2}
+  QGraphicsEllipseItem{-radius, -radius, radius * 2, radius * 2},
 {
   setBrush(QBrush{Qt::white});
+  setPos(x + radius, y + radius);
 }
 
 void Ball::advance(int phase) {
