@@ -42,3 +42,13 @@ QVariant Ball::itemChange(GraphicsItemChange change, const QVariant & value) {
   }
   return value;
 }
+
+void Ball::changeImpulseDirection(QPointF offset) {
+  impulseVector += offset;
+}
+
+void Ball::applyImpulse() {
+  bool wakeIfSleeping = true;
+  body->ApplyLinearImpulse(gameScene()->mapToWorld(impulseVector),
+                           body->GetPosition(), wakeIfSleeping);
+}

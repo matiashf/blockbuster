@@ -4,9 +4,12 @@
 #include <QGraphicsEllipseItem>
 #include <Box2D.h>
 
+#include "GameScene.hpp"
+
 class Ball : public QGraphicsEllipseItem {
 private:
   b2Body* body;
+  QPointF impulseVector;
   inline GameScene* gameScene() {return dynamic_cast<GameScene*>(scene());}
 public:
   Ball(qreal x, qreal y, qreal radius);
@@ -14,6 +17,9 @@ public:
 protected slots:
   void advance(int phase) override;
   QVariant itemChange(GraphicsItemChange change, const QVariant & value);
+public slots:
+  void changeImpulseDirection(QPointF offset);
+  void applyImpulse();
 };
 
 #endif
