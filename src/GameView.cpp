@@ -6,6 +6,7 @@ GameView::GameView(GameScene* scene_, QWidget* parent) :
   QGraphicsView{scene_, parent}
 {
   // Enable OpenGL rendering and use antialiasing
+  setRenderHint(QPainter::Antialiasing);
   setViewport(new QGLWidget{QGLFormat(QGL::SampleBuffers)});
   // setViewport transfers ownership of QGLWidget, deleted in destructor
 
