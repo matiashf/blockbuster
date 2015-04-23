@@ -42,6 +42,8 @@ private:
   // The number of times per seconds advance() should be called
   static const qreal kFrameRate;
 
+  static const int kSceneWidth, kSceneHeight;
+
   void addEdgeLine(QPointF, QPointF);
 public:
   GameScene(QObject* parent=0);

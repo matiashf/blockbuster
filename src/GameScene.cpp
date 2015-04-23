@@ -10,9 +10,11 @@ const int GameScene::kMaxVelocityIterations = 1;
 const int GameScene::kMaxPositionIterations = 1;
 const float GameScene::kScaleFactor = 2.0f; // => world size ~ 35m x 20m
 const qreal GameScene::kFrameRate = 60.0; // 60 FPS => ~16 ms between frames
+const int GameScene::kSceneHeight = 1080; // Full HD
+const int GameScene::kSceneWidth = kSceneHeight * 16 / 9;
 
 GameScene::GameScene(QObject* parent) :
-  QGraphicsScene{0, 0, 1920, 1080, parent}, // x, y, width, height. Full HD.
+  QGraphicsScene{0, 0, kSceneWidth, kSceneHeight, parent},
   ball_{new Ball{width() / 2.0f - 12.5f, 0, 25.0f}},
   timer{new QTimer{this}},
   gravity{0.0f, 9.81f}, // Earth gravity
