@@ -11,6 +11,8 @@ const qreal ImpulseVectorItem::kMagnitudeSteps = 10.0d; // keypresses
 const qreal ImpulseVectorItem::kDirectionSteps = 36.0d; // keypresses
 const qreal ImpulseVectorItem::kArrowLength = 50.0d; // pixels
 const qreal ImpulseVectorItem::kRegenerationTime = 5.0f; // seconds
+const qreal ImpulseVectorItem::kArrowAngle = M_PI / 4.0f; // radians
+const qreal ImpulseVectorItem::kTipLength = kArrowLength / 4.0d; // pixels
 
 ImpulseVectorItem::ImpulseVectorItem(Ball* parent) :
   QGraphicsItem{parent},
@@ -45,6 +47,9 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
   Q_UNUSED(option);
   Q_UNUSED(widget);
 
+  if (desired_magnitude == 0)
+    return;
+
   // Unit vectors
   qreal x = qCos(direction), y = qSin(direction);
 
@@ -57,7 +62,7 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
   // Points
   QPointF edge_of_ball{x * ball_radius, y * ball_radius};
   QPointF end_of_actual_line{x * actual_length, y * actual_length};
-  QPointF end_of_desired_line{x * desired_length, y * desired_length};
+  QPointF arrow_tip{x * desired_length, y * desired_length};
 
   // Draw
   QPen pen;
@@ -67,12 +72,21 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
   painter->setPen(pen); // Pass by value
   painter->drawLine(QLineF{edge_of_ball, end_of_actual_line});
   // Red line
-  if (desired_magnitude > actual_magnitude) {
+  if (actual_length < desired_length) {
     pen.setColor(Qt::red);
     painter->setPen(pen); // Pass by value
-    painter->drawLine(QLineF{end_of_actual_line, end_of_desired_line});
+    painter->drawLine(QLineF{end_of_actual_line, arrow_tip});
   }
-  // TODO: Draw arrow
+  // Arrow head
+  qreal head_distance = qSqrt(
+    pow(kTipLength, 2.0d) + pow(desired_length, 2.0d)
+    - 2 * kTipLength * desired_length * qCos(kArrowAngle));
+  qreal head_angle = qAsin(kTipLength / head_distance * qSin(kArrowAngle));
+  for (qreal sign = -1; sign <= 1; sign += 2) {
+    qreal angle = direction + sign * head_angle;
+    painter->drawLine(arrow_tip, QPointF{qCos(angle) * head_distance,
+                                         qSin(angle) * head_distance});
+  }
 }
 
 QPointF ImpulseVectorItem::getActual() {

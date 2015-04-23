@@ -19,6 +19,8 @@ private:
   static const qreal kArrowLength;
   static const qreal kMaximumMagnitude;
   static const qreal kRegenerationTime;
+  static const qreal kArrowAngle;
+  static const qreal kTipLength;
 public:
   ImpulseVectorItem(Ball* parent);
 
