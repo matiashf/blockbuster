@@ -29,12 +29,16 @@ void ImpulseVectorItem::advance(int phase) {
   // phase 1: The scene is advancing
   if (phase == 0) return;
 
+  if (actual_magnitude >= kMaximumMagnitude)
+    return; // Fully regenerated already
+
   // Regenerate up to maximum
   const qreal rate = kMaximumMagnitude / kRegenerationTime;
   const qreal seconds = time.restart() / 1000.0f; // msec timer
   actual_magnitude += rate * seconds;
   if (actual_magnitude > kMaximumMagnitude)
     actual_magnitude = kMaximumMagnitude;
+  update(); // Schedule redraw
 }
 
 QRectF ImpulseVectorItem::boundingRect() const {
