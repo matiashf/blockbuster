@@ -46,7 +46,7 @@ QVariant Ball::itemChange(GraphicsItemChange change, const QVariant & value) {
 }
 
 void Ball::applyImpulse() {
-  QPointF impulse = impulseVector()->getVector();
+  QPointF impulse = impulseVector()->getActual();
   bool wakeIfSleeping = true;
   body->ApplyLinearImpulse(gameScene()->mapToWorld(impulse),
                            body->GetPosition(), wakeIfSleeping);

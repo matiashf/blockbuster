@@ -35,6 +35,8 @@ void Box::advance(int phase) {
     setPos(gameScene()->mapFromWorld(body->GetPosition()));
     setRotation(radiansToDegrees(body->GetAngle()));
   }
+
+  QGraphicsRectItem::advance(phase); // Advance children
 }
 
 QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
