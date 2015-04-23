@@ -5,8 +5,10 @@
 #include <QPainter>
 #include <cmath> // M_PI
 
-const qreal ImpulseVectorItem::kMagnitudeStep = 2.0d;
+const qreal ImpulseVectorItem::kMagnitudeStep = 100.0d;
 const qreal ImpulseVectorItem::kDirectionStep = M_PI / 18.0d;
+const qreal ImpulseVectorItem::kScaleFactor =
+  1.0f / ImpulseVectorItem::kMagnitudeStep;
 
 ImpulseVectorItem::ImpulseVectorItem(Ball* parent) :
   QGraphicsItem{parent},
@@ -31,9 +33,11 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
 
   // Determine positions to paint
   qreal x = qCos(direction), y = qSin(direction); // Unit vectors
-  qreal adjusted_magnitude = ball_radius + magnitude;
+
+  qreal scaled_magnitude = ball_radius + magnitude * kScaleFactor;
+
   QPointF edge_of_ball{x * ball_radius, y * ball_radius};
-  QPointF tip_of_vector{x * adjusted_magnitude, y * adjusted_magnitude};
+  QPointF tip_of_vector{x * scaled_magnitude, y * scaled_magnitude};
 
   painter->drawLine(QLineF{edge_of_ball, tip_of_vector});
 }

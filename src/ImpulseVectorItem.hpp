@@ -13,6 +13,7 @@ private:
 
   static const qreal kMagnitudeStep;
   static const qreal kDirectionStep;
+  static const qreal kScaleFactor;
 public:
   ImpulseVectorItem(Ball* parent);
 
