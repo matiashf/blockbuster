@@ -1,4 +1,7 @@
 #include "GameView.hpp"
+#include "GameScene.hpp"
+#include "Ball.hpp"
+#include "ImpulseVectorItem.hpp"
 
 #include <QGLFormat>
 
@@ -33,11 +36,26 @@ void GameView::keyPressEvent(QKeyEvent* event) {
   case Qt::Key_Q:
     close();
     break;
-  case Qt::Key_Space:
+  case Qt::Key_P:
     ((GameScene *) scene())->toggle();
     break;
   case Qt::Key_S:
     ((GameScene *) scene())->advance(10.0d); // milliseconds
+    break;
+  case Qt::Key_Up:
+    ((GameScene *) scene())->ball()->impulseVector()->increase();
+    break;
+  case Qt::Key_Down:
+    ((GameScene *) scene())->ball()->impulseVector()->decrease();
+    break;
+  case Qt::Key_Left:
+    ((GameScene *) scene())->ball()->impulseVector()->rotateLeft();
+    break;
+  case Qt::Key_Right:
+    ((GameScene *) scene())->ball()->impulseVector()->rotateRight();
+    break;
+  case Qt::Key_Space:
+    ((GameScene *) scene())->ball()->applyImpulse();
     break;
   default:
     event->ignore();

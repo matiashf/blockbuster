@@ -7,9 +7,13 @@
 
 #include <Box2D.h>
 
+class Ball;
+
 class GameScene: public QGraphicsScene {
   Q_OBJECT
 private:
+  Ball* ball_;
+
   QTimer* timer; // Periodic event dispatcher
   QTime worldTime; // Clock for synchronizing the physics world with real time
 
@@ -43,6 +47,7 @@ public:
   GameScene(QObject* parent=0);
 
   inline b2World* world() { return &world_; }
+  inline Ball* ball() { return ball_; }
 
   // Convenience functions for mapping between world and scene coordinates
   inline float32 mapToWorld(qreal scalar) { return scalar * worldScale; }
