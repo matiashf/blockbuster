@@ -5,10 +5,10 @@
 #include <QPainter>
 #include <cmath> // M_PI
 
-const qreal ImpulseVectorItem::kMagnitudeStep = 100.0d;
-const qreal ImpulseVectorItem::kDirectionStep = M_PI / 18.0d;
+const qreal ImpulseVectorItem::kMagnitudeStep = 100.0d; // impulses per keypress
+const qreal ImpulseVectorItem::kDirectionStep = M_PI / 18.0d; // radians per keypress
 const qreal ImpulseVectorItem::kScaleFactor =
-  1.0f / ImpulseVectorItem::kMagnitudeStep;
+  1.0f / ImpulseVectorItem::kMagnitudeStep; // pixels per impulse
 
 ImpulseVectorItem::ImpulseVectorItem(Ball* parent) :
   QGraphicsItem{parent},
