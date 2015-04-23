@@ -10,6 +10,7 @@ Ball::Ball(qreal x, qreal y, qreal radius) :
 {
   setBrush(QBrush{Qt::white});
   setPos(x + radius, y + radius);
+                                    setZValue(1); // Draw in front of boxes (which have default Z-value of 0)
 }
 
 void Ball::advance(int phase) {
