@@ -6,19 +6,21 @@
 
 #include "GameScene.hpp"
 
+class ImpulseVectorItem; // Forward declaration
+
 class Ball : public QGraphicsEllipseItem {
 private:
   b2Body* body;
-  QPointF impulseVector;
+  ImpulseVectorItem* impulseVector_;
   inline GameScene* gameScene() {return dynamic_cast<GameScene*>(scene());}
 public:
   Ball(qreal x, qreal y, qreal radius);
-  inline qreal radius() { return rect().width() / 2.0d; };
+  inline qreal radius() { return rect().width() / 2.0d; }
+  inline ImpulseVectorItem* impulseVector() { return impulseVector_; }
 protected slots:
   void advance(int phase) override;
   QVariant itemChange(GraphicsItemChange change, const QVariant & value);
 public slots:
-  void changeImpulseDirection(QPointF offset);
   void applyImpulse();
 };
 

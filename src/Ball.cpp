@@ -1,11 +1,12 @@
 #include "Ball.hpp"
+#include "ImpulseVectorItem.hpp"
 
 #include <QBrush>
 
 Ball::Ball(qreal x, qreal y, qreal radius) :
   QGraphicsEllipseItem{-radius, -radius, radius * 2, radius * 2},
   body{nullptr},
-  impulseVector{0.0d, 0.0d}
+  impulseVector_{new ImpulseVectorItem{this}}
 {
   setBrush(QBrush{Qt::white});
   setPos(x + radius, y + radius);
@@ -43,12 +44,9 @@ QVariant Ball::itemChange(GraphicsItemChange change, const QVariant & value) {
   return value;
 }
 
-void Ball::changeImpulseDirection(QPointF offset) {
-  impulseVector += offset;
-}
-
 void Ball::applyImpulse() {
+  QPointF impulse = impulseVector()->getVector();
   bool wakeIfSleeping = true;
-  body->ApplyLinearImpulse(gameScene()->mapToWorld(impulseVector),
+  body->ApplyLinearImpulse(gameScene()->mapToWorld(impulse),
                            body->GetPosition(), wakeIfSleeping);
 }
