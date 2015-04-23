@@ -16,7 +16,7 @@ ImpulseVectorItem::ImpulseVectorItem(Ball* parent) :
   QGraphicsItem{parent},
   direction{0},
   desired_magnitude{0},
-  actual_magnitude{0},
+  actual_magnitude{kMaximumMagnitude},
   ball_radius{parent->radius()}
 {
   time.start();
