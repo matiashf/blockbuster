@@ -1,12 +1,12 @@
 #include "Ball.hpp"
-#include "ImpulseVectorItem.hpp"
+#include "Arrow.hpp"
 
 #include <QBrush>
 
 Ball::Ball(qreal x, qreal y, qreal radius) :
   QGraphicsEllipseItem{-radius, -radius, radius * 2, radius * 2},
   body{nullptr},
-  impulseVector_{new ImpulseVectorItem{this}}
+  arrow_{new Arrow{this}}
 {
   setBrush(QBrush{Qt::white});
   setPos(x + radius, y + radius);
@@ -46,7 +46,7 @@ QVariant Ball::itemChange(GraphicsItemChange change, const QVariant & value) {
 }
 
 void Ball::applyImpulse() {
-  QPointF impulse = impulseVector()->get();
+  QPointF impulse = arrow()->getImpulseVector();
   bool wakeIfSleeping = true;
   body->ApplyLinearImpulse(gameScene()->mapToWorld(impulse),
                            body->GetPosition(), wakeIfSleeping);

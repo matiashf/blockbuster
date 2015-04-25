@@ -1,12 +1,12 @@
-#ifndef IMPULSE_VECTOR_ITEM_HPP
-#define IMPULSE_VECTOR_ITEM_HPP
+#ifndef ARROW_HPP
+#define ARROW_HPP
 
 #include <QGraphicsItem>
 #include <QTime>
 
 class Ball; // Forward declaration
 
-class ImpulseVectorItem : public QGraphicsItem {
+class Arrow : public QGraphicsItem {
 private:
   QTime time; // For regenerating available magnitude
   qreal direction; // radians. horizontal right is zero, clockwise is positive.
@@ -22,7 +22,7 @@ private:
   static const qreal kArrowAngle;
   static const qreal kTipLength;
 public:
-  ImpulseVectorItem(Ball* parent);
+  Arrow(Ball* parent);
 
   void advance(int phase) override;
 
@@ -32,7 +32,7 @@ public:
   void increaseDirection(qreal radians);
   void increaseMagnitude(qreal difference);
 
-  QPointF get();
+  QPointF getImpulseVector();
 
   inline void increase() { increaseMagnitude(kMaximumMagnitude / kMagnitudeSteps); }
   inline void decrease() { increaseMagnitude(-kMaximumMagnitude / kMagnitudeSteps); }

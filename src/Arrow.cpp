@@ -1,4 +1,4 @@
-#include "ImpulseVectorItem.hpp"
+#include "Arrow.hpp"
 #include "Ball.hpp"
 
 #include <QtMath>
@@ -6,15 +6,15 @@
 #include <cmath> // M_PI
 #include <algorithm> // std::min
 
-const qreal ImpulseVectorItem::kMaximumMagnitude = 500.0d; // pixel impulses
-const qreal ImpulseVectorItem::kMagnitudeSteps = 10.0d; // keypresses
-const qreal ImpulseVectorItem::kDirectionSteps = 36.0d; // keypresses
-const qreal ImpulseVectorItem::kArrowLength = 50.0d; // pixels
-const qreal ImpulseVectorItem::kRegenerationTime = 3.0f; // seconds
-const qreal ImpulseVectorItem::kArrowAngle = M_PI / 4.0f; // radians
-const qreal ImpulseVectorItem::kTipLength = kArrowLength / 4.0d; // pixels
+const qreal Arrow::kMaximumMagnitude = 500.0d; // pixel impulses
+const qreal Arrow::kMagnitudeSteps = 10.0d; // keypresses
+const qreal Arrow::kDirectionSteps = 36.0d; // keypresses
+const qreal Arrow::kArrowLength = 50.0d; // pixels
+const qreal Arrow::kRegenerationTime = 3.0f; // seconds
+const qreal Arrow::kArrowAngle = M_PI / 4.0f; // radians
+const qreal Arrow::kTipLength = kArrowLength / 4.0d; // pixels
 
-ImpulseVectorItem::ImpulseVectorItem(Ball* parent) :
+Arrow::Arrow(Ball* parent) :
   QGraphicsItem{parent},
   direction{0},
   desired_magnitude{0},
@@ -24,7 +24,7 @@ ImpulseVectorItem::ImpulseVectorItem(Ball* parent) :
   time.start();
 }
 
-void ImpulseVectorItem::advance(int phase) {
+void Arrow::advance(int phase) {
   // phase 0: The scene is about to advance
   // phase 1: The scene is advancing
   if (phase == 0) return;
@@ -41,13 +41,13 @@ void ImpulseVectorItem::advance(int phase) {
   update(); // Schedule redraw
 }
 
-QRectF ImpulseVectorItem::boundingRect() const {
+QRectF Arrow::boundingRect() const {
   qreal x = qCos(direction) * desired_magnitude;
   qreal y = qSin(direction) * desired_magnitude;
   return QRectF{0, 0, x, y}.normalized();
 }
 
-void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget) {
+void Arrow::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget) {
   Q_UNUSED(option);
   Q_UNUSED(widget);
 
@@ -93,7 +93,7 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
   }
 }
 
-QPointF ImpulseVectorItem::get() {
+QPointF Arrow::getImpulseVector() {
   qreal magnitude = std::min(available_magnitude, desired_magnitude);
   available_magnitude -= magnitude;
   qreal x = qCos(direction) * magnitude;
@@ -101,7 +101,7 @@ QPointF ImpulseVectorItem::get() {
   return QPointF{x, y};
 }
 
-void ImpulseVectorItem::increaseDirection(qreal radians) {
+void Arrow::increaseDirection(qreal radians) {
   prepareGeometryChange(); // Let the scene know that the object changes size
 
   direction += radians;
@@ -114,7 +114,7 @@ void ImpulseVectorItem::increaseDirection(qreal radians) {
     direction += tau;
 }
 
-void ImpulseVectorItem::increaseMagnitude(qreal difference) {
+void Arrow::increaseMagnitude(qreal difference) {
   prepareGeometryChange(); // Let the scene know that the object changes size
   desired_magnitude += difference;
   if (desired_magnitude < 0)
