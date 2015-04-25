@@ -4,9 +4,8 @@
 #include <QGraphicsEllipseItem>
 #include <Box2D.h>
 
+#include "Arrow.hpp"
 #include "GameScene.hpp"
-
-class Arrow; // Forward declaration
 
 class Ball : public QGraphicsEllipseItem {
 private:
