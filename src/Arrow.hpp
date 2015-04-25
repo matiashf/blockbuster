@@ -8,7 +8,7 @@ class Ball; // Forward declaration
 
 class Arrow : public QGraphicsItem {
 private:
-  QTime time; // For regenerating available magnitude
+  QTime regeneration_; // For regenerating available magnitude
   qreal direction; // radians. horizontal right is zero, clockwise is positive.
   qreal desired_magnitude; // pixel impulses = pixels * kg / second
   qreal available_magnitude; // pixel impulses. Regenerates with time.
@@ -32,6 +32,7 @@ public:
   void increaseDirection(qreal radians);
   void increaseMagnitude(qreal difference);
 
+  inline QTime* regeneration() { return &regeneration_; }
   QPointF getImpulseVector();
 
   inline void increase() { increaseMagnitude(kMaximumMagnitude / kMagnitudeSteps); }

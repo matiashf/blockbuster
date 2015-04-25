@@ -21,7 +21,7 @@ Arrow::Arrow(Ball* parent) :
   available_magnitude{0},
   ball_radius{parent->radius()}
 {
-  time.start();
+  regeneration_.start();
 }
 
 void Arrow::advance(int phase) {
@@ -30,13 +30,13 @@ void Arrow::advance(int phase) {
   if (phase == 0) return;
 
   if (available_magnitude >= kMaximumMagnitude) {
-    time.restart(); // Clear the timer
+    regeneration_.restart(); // Clear the timer
     return; // Fully regenerated already
   }
 
   // Regenerate up to maximum
   const qreal rate = kMaximumMagnitude / kRegenerationTime;
-  const qreal seconds = time.restart() / 1000.0f; // msec timer
+  const qreal seconds = regeneration_.restart() / 1000.0f; // msec timer
   available_magnitude += rate * seconds;
   if (available_magnitude > kMaximumMagnitude)
     available_magnitude = kMaximumMagnitude;

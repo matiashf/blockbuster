@@ -57,6 +57,7 @@ void GameScene::addEdgeLine(QPointF from, QPointF to) {
 void GameScene::start() {
   worldTime.start();
   timer->start(); // Start calling advance()
+  ball()->arrow()->regeneration()->start(); // Resets timer
 }
 
 void GameScene::stop() {
