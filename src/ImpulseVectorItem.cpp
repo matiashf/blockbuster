@@ -6,11 +6,11 @@
 #include <cmath> // M_PI
 #include <algorithm> // std::min
 
-const qreal ImpulseVectorItem::kMaximumMagnitude = 2000.0d; // pixel impulses
+const qreal ImpulseVectorItem::kMaximumMagnitude = 500.0d; // pixel impulses
 const qreal ImpulseVectorItem::kMagnitudeSteps = 10.0d; // keypresses
 const qreal ImpulseVectorItem::kDirectionSteps = 36.0d; // keypresses
 const qreal ImpulseVectorItem::kArrowLength = 50.0d; // pixels
-const qreal ImpulseVectorItem::kRegenerationTime = 5.0f; // seconds
+const qreal ImpulseVectorItem::kRegenerationTime = 3.0f; // seconds
 const qreal ImpulseVectorItem::kArrowAngle = M_PI / 4.0f; // radians
 const qreal ImpulseVectorItem::kTipLength = kArrowLength / 4.0d; // pixels
 
