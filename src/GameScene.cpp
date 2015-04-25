@@ -38,8 +38,9 @@ GameScene::GameScene(QObject* parent) :
 
   addItem(ball());
 
-  for (int i = 0; i < 100; ++i)
-    addItem(new Box{float(rand() % (int(width()) - 50)), float(rand() % (int(height()) - 50)), 50.0f, 50.0f});
+  for (qreal x = 50.0d; x <= width() - 100.0d; x += 200.0d)
+    for (qreal y = height() * 0.75d; y <= height() - 50.0d; y += 50.0d)
+      addItem(new Box{x, y, 50.0f, 50.0f});
 }
 
 /** Create a static (non-moving) line between the two points. Used to
