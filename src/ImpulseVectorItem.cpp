@@ -18,7 +18,7 @@ ImpulseVectorItem::ImpulseVectorItem(Ball* parent) :
   QGraphicsItem{parent},
   direction{0},
   desired_magnitude{0},
-  actual_magnitude{kMaximumMagnitude},
+  available_magnitude{kMaximumMagnitude},
   ball_radius{parent->radius()}
 {
   time.start();
@@ -29,15 +29,15 @@ void ImpulseVectorItem::advance(int phase) {
   // phase 1: The scene is advancing
   if (phase == 0) return;
 
-  if (actual_magnitude >= kMaximumMagnitude)
+  if (available_magnitude >= kMaximumMagnitude)
     return; // Fully regenerated already
 
   // Regenerate up to maximum
   const qreal rate = kMaximumMagnitude / kRegenerationTime;
   const qreal seconds = time.restart() / 1000.0f; // msec timer
-  actual_magnitude += rate * seconds;
-  if (actual_magnitude > kMaximumMagnitude)
-    actual_magnitude = kMaximumMagnitude;
+  available_magnitude += rate * seconds;
+  if (available_magnitude > kMaximumMagnitude)
+    available_magnitude = kMaximumMagnitude;
   update(); // Schedule redraw
 }
 
@@ -60,12 +60,12 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
   const qreal scale = kArrowLength / kMaximumMagnitude;
 
   // Lengths
-  qreal actual_length = ball_radius + std::min(actual_magnitude, desired_magnitude) * scale;
+  qreal available_length = ball_radius + std::min(available_magnitude, desired_magnitude) * scale;
   qreal desired_length = ball_radius + desired_magnitude * scale;
 
   // Points
   QPointF edge_of_ball{x * ball_radius, y * ball_radius};
-  QPointF end_of_actual_line{x * actual_length, y * actual_length};
+  QPointF end_of_available_line{x * available_length, y * available_length};
   QPointF arrow_tip{x * desired_length, y * desired_length};
 
   // Draw
@@ -74,12 +74,12 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
   // Green line
   pen.setColor(Qt::green);
   painter->setPen(pen); // Pass by value
-  painter->drawLine(QLineF{edge_of_ball, end_of_actual_line});
+  painter->drawLine(QLineF{edge_of_ball, end_of_available_line});
   // Red line
-  if (actual_length < desired_length) {
+  if (available_length < desired_length) {
     pen.setColor(Qt::red);
     painter->setPen(pen); // Pass by value
-    painter->drawLine(QLineF{end_of_actual_line, arrow_tip});
+    painter->drawLine(QLineF{end_of_available_line, arrow_tip});
   }
   // Arrow head
   qreal head_distance = qSqrt(
@@ -93,9 +93,9 @@ void ImpulseVectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
   }
 }
 
-QPointF ImpulseVectorItem::getActual() {
-  qreal magnitude = std::min(actual_magnitude, desired_magnitude);
-  actual_magnitude -= magnitude;
+QPointF ImpulseVectorItem::get() {
+  qreal magnitude = std::min(available_magnitude, desired_magnitude);
+  available_magnitude -= magnitude;
   qreal x = qCos(direction) * magnitude;
   qreal y = qSin(direction) * magnitude;
   return QPointF{x, y};

@@ -8,10 +8,10 @@ class Ball; // Forward declaration
 
 class ImpulseVectorItem : public QGraphicsItem {
 private:
-  QTime time; // For regenerating actual magnitude
+  QTime time; // For regenerating available magnitude
   qreal direction; // radians. horizontal right is zero, clockwise is positive.
   qreal desired_magnitude; // pixel impulses = pixels * kg / second
-  qreal actual_magnitude; // pixel impulses. Regenerates with time.
+  qreal available_magnitude; // pixel impulses. Regenerates with time.
   qreal ball_radius; // pixels
 
   static const qreal kMagnitudeSteps;
@@ -32,7 +32,7 @@ public:
   void increaseDirection(qreal radians);
   void increaseMagnitude(qreal difference);
 
-  QPointF getActual();
+  QPointF get();
 
   inline void increase() { increaseMagnitude(kMaximumMagnitude / kMagnitudeSteps); }
   inline void decrease() { increaseMagnitude(-kMaximumMagnitude / kMagnitudeSteps); }
