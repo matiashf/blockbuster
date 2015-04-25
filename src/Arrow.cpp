@@ -29,8 +29,10 @@ void Arrow::advance(int phase) {
   // phase 1: The scene is advancing
   if (phase == 0) return;
 
-  if (available_magnitude >= kMaximumMagnitude)
+  if (available_magnitude >= kMaximumMagnitude) {
+    time.restart(); // Clear the timer
     return; // Fully regenerated already
+  }
 
   // Regenerate up to maximum
   const qreal rate = kMaximumMagnitude / kRegenerationTime;
