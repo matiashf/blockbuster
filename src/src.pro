@@ -14,6 +14,6 @@ MOC_DIR = ../build
 RCC_DIR = ../build
 UI_DIR = ../build
 
-# Bullet physics library
+# Box2D physics library
 INCLUDEPATH += /usr/include/Box2D/
 LIBS += -lBox2D

@@ -1,21 +1,21 @@
 #include "GameLoader.hpp"
+#include "GameScene.hpp"
+#include "Box.hpp"
+
+#include <vector> // std::vector
+#include <QRect>
 
 GameLoader::GameLoader(QIODevice& input_) :
   input{input_}
 {
 }
 
-GameLoader::operator bool() const {
-  // FIXME
-  return false;
+std::vector<QRect> parse() {
+  std::vector<QRect> partial_boxes; // Boxes during parsing
+  std::vector<QRect> boxes; // Parsed boxes
+  return boxes;
 }
 
-GameLoader& GameLoader::operator++() {
-  // FIXME
-  return *this;
-}
-
-QGraphicsItem* GameLoader::operator*() const {
-  // FIXME
-  return nullptr;
+void GameLoader::load(GameScene* scene) {
+  scene->addItem(new Box{0, 0, scene->width(), scene->height()});
 }

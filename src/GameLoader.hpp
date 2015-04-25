@@ -1,9 +1,11 @@
 #ifndef GAME_LOADER_HPP
 #define GAME_LOADER_HPP
 
-#include <QFile>
+#include <functional> // std::function
+#include <vector> // std::vector
+#include <QIODevice>
 
-class QGraphicsItem; // Forward declaration
+class GameScene; // Forward declaration
 
 class GameLoader {
 private:
@@ -11,9 +13,8 @@ private:
 public:
   GameLoader(QIODevice&);
 
-  operator bool() const;
-  GameLoader& operator++();
-  QGraphicsItem* operator*() const;
+  std::vector<QRect> parse();
+  void load(GameScene* scene);
 };
 
 #endif

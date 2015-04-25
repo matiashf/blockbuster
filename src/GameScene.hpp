@@ -4,6 +4,7 @@
 #include <QtWidgets/QGraphicsScene>
 #include <QTimer>
 #include <QTime>
+#include <QString>
 
 #include <Box2D.h>
 
@@ -64,7 +65,7 @@ public:
     return b2Vec2{mapToWorld(x), mapToWorld(y)};
   }
 
-  void load(const char* map_path);
+  void load(QString map_url);
 
 public slots:
   void start();

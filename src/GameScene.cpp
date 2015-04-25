@@ -84,13 +84,11 @@ void GameScene::advance() {
   advance(worldTime.restart());
 }
 
-void GameScene::load(const char* map_path) {
+void GameScene::load(QString map_url) {
   // TODO: Error handling
-  QFile file{map_path};
+  QFile file{map_url};
   file.open(QIODevice::ReadOnly);
   GameLoader loader{file}; // Pass by reference
-  while (loader) {
-    addItem(*loader);
-    ++loader;
-  }
+  loader.load(this);
+  file.close();
 }
