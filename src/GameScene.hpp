@@ -64,6 +64,8 @@ public:
     return b2Vec2{mapToWorld(x), mapToWorld(y)};
   }
 
+  void load(const char* map_path);
+
 public slots:
   void start();
   void stop();

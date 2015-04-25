@@ -1,9 +1,11 @@
 #include "GameScene.hpp"
 #include "Ball.hpp"
 #include "Box.hpp"
+#include "GameLoader.hpp"
 
 #include <Box2D.h>
 #include <cmath> // pow
+#include <QFile>
 
 // The meaning of these constants are explained in the header file.
 const int GameScene::kMaxVelocityIterations = 1;
@@ -80,4 +82,15 @@ void GameScene::advance(qreal milliseconds) {
 
 void GameScene::advance() {
   advance(worldTime.restart());
+}
+
+void GameScene::load(const char* map_path) {
+  // TODO: Error handling
+  QFile file{map_path};
+  file.open(QIODevice::ReadOnly);
+  GameLoader loader{file}; // Pass by reference
+  while (loader) {
+    addItem(*loader);
+    ++loader;
+  }
 }
