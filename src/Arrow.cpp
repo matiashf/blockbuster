@@ -16,9 +16,9 @@ const qreal Arrow::kTipLength = kArrowLength / 4.0d; // pixels
 
 Arrow::Arrow(Ball* parent) :
   QGraphicsItem{parent},
-  direction{0},
-  desired_magnitude{0},
-  available_magnitude{kMaximumMagnitude},
+  direction{-M_PI / 2.0}, // Straight up
+  desired_magnitude{kMaximumMagnitude},
+  available_magnitude{0},
   ball_radius{parent->radius()}
 {
   time.start();
