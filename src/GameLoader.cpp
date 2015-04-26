@@ -6,8 +6,6 @@
 
 GameLoader::GameLoader(QTextStream* stream_, QFileInfo* file_info_) :
   stream{stream_},
-  width_{0},
-  height_{0}
   file_info{file_info_}
 {
 }
@@ -36,6 +34,8 @@ void GameLoader::parse() {
 
   lineNo = 1;
   linePos = 0;
+  width_ = 0;
+  height_ = 0;
 
   // Discard all lines until we find a line beginning with a slash
   while (true) {
