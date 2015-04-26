@@ -21,7 +21,6 @@ Arrow::Arrow(Ball* parent) :
   available_magnitude{0},
   ball_radius{parent->radius()}
 {
-  regeneration_.start();
 }
 
 void Arrow::advance(int phase) {
