@@ -1,17 +1,22 @@
 #include <gtest/gtest.h>
 #include <QDir>
 #include <QString>
+#include <string> // std::string
 
 #include "GameSceneTest.cpp"
 
+/* Use std::string instead of QString to get nicer error
+   messages. QString doesn't play well with the google test framework
+   (which uses c++ output streams) */
+
 class MapTest : public GameSceneTest,
-                public ::testing::WithParamInterface<QString> {
+                public ::testing::WithParamInterface<std::string> {
 public:
-  static QStringList all_maps() {
+  static std::vector<std::string> all_maps() {
     QDir dir{":/maps/"};
-    QStringList absolute_paths;
+    std::vector<std::string> absolute_paths;
     for (QFileInfo i : dir.entryInfoList())
-      absolute_paths.append(i.absoluteFilePath());
+      absolute_paths.push_back(i.absoluteFilePath().toStdString());
     return absolute_paths;
   }
 };
@@ -19,11 +24,9 @@ public:
 INSTANTIATE_TEST_CASE_P(all_maps, MapTest,
                         ::testing::ValuesIn(MapTest::all_maps()));
 
-#include <iostream>
-
 TEST_P(MapTest, load) {
   // Simply load the map. We can't really test for anything else,
   // because this test gets run for every map. The intention is simply
   // to avoid shipping maps that crash the game.
-  scene.load(GetParam());
+  scene.load(QString{GetParam().c_str()});
 }
