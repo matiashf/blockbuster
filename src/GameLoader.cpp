@@ -16,7 +16,7 @@ std::exception GameLoader::error(const char * description) {
   std::cerr << "Error: " << description << std::endl;
   std::cerr << "on line " << lineNo << ", character " << linePos << ":" << std::endl;
   std::cerr << line.toStdString() << std::endl;
-  std::cerr << std::string(linePos - 1, ' ') << '^' << std::endl;
+  std::cerr << std::string(linePos, ' ') << '^' << std::endl;
   return std::runtime_error(description);
 }
 
@@ -74,7 +74,7 @@ void GameLoader::parse() {
       throw error("Unexpected end of file in map body.");
     }
     ++height_;
-    for (linePos=1; linePos < width_ + 2; ++linePos)
+    for (linePos=1; linePos < width_ + 1; ++linePos)
       parse(linePos - 1, height_ - 1, line[linePos]);
     if (line[linePos] != bar)
       throw error("Unexpected symbol at end of line in map body. Expected bar (|).");
@@ -86,7 +86,7 @@ void GameLoader::parse() {
     linePos = line.length();
     throw error("Unexpected end of file in map footer.");
   }
-  for (linePos = 1; linePos < width_ + 2; ++linePos)
+  for (linePos = 1; linePos < width_ + 1; ++linePos)
     if (line[linePos] != dash)
       throw error("Unexpected symbol in map footer. Expected dash (-).");
   if (line[linePos] != slash)
