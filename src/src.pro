@@ -4,7 +4,7 @@ QT += core gui widgets opengl
 
 HEADERS += $$files(../src/*.hpp)
 SOURCES += $$files(../src/*.cpp)
-RESOURCES += $$files(../resources/*.qrc)
+RESOURCES += ../resources/resources.qrc
 
 TARGET=blockbuster
 
