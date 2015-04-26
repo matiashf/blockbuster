@@ -25,7 +25,7 @@ void GameLoader::parse(int x, int y, QChar symbol) {
   if (symbol ==  hash)
     rects_.push_back(QRect{x, y, 1, 1});
   else
-    throw error("Unexpected symbol");
+    throw error("Unexpected symbol inside map");
 }
 
 void GameLoader::parse() {
@@ -48,14 +48,14 @@ void GameLoader::parse() {
   // The line starts with a slash. Expecting a /----\ header
   for (linePos = 1; ; linePos++) {
     if (linePos == line.length())
-      throw error("Unexpected end of line");
+      throw error("Unexpected end of line while parsing map header");
     QChar current = line[linePos];
     if (current == dash)
       ++width_;
     else if (current == backslash)
       break;
     else
-      throw error("Unexpected symbol");
+      throw error("Unexpected symbol while parsing map header. Expected dash (-) or slash (/).");
   }
 
   // Parsing lines of the map |...| until the end \-----/
@@ -64,33 +64,33 @@ void GameLoader::parse() {
     linePos = 0;
     line = stream->readLine();
     if (line.isNull())
-      throw error("Unexpected end of file");
+      throw error("Missing map footer");
     else if (line.startsWith(backslash))
       break;
     else if (!line.startsWith(bar))
-      throw error("Unexpected symbol");
+      throw error("Unexpected symbol at beginning of line in map body. Expected bar (|)");
     else if (line.length() < width_ + 2) {
       linePos = line.length();
-      throw error("Unexpected end of file");
+      throw error("Unexpected end of file in map body.");
     }
     ++height_;
     for (linePos=1; linePos < width_ + 2; ++linePos)
       parse(linePos - 1, height_ - 1, line[linePos]);
     if (line[linePos] != bar)
-      throw error("Unexpected symbol");
+      throw error("Unexpected symbol at end of line in map body. Expected bar (|).");
   }
 
   // The last line of the map, something like this: \-----/
   // We already know the line starts with a backslash
   if (line.length() < width_ + 2) {
     linePos = line.length();
-    throw error("Unexpected end of file");
+    throw error("Unexpected end of file in map footer.");
   }
   for (linePos = 1; linePos < width_ + 2; ++linePos)
     if (line[linePos] != dash)
-      throw error("Unexpected symbol");
+      throw error("Unexpected symbol in map footer. Expected dash (-).");
   if (line[linePos] != slash)
-    throw error("Unexpected symbol");
+    throw error("Unexpected end of map footer. Expected slash (/).");
 
   // All lines after the end of the map are ignored
 }
