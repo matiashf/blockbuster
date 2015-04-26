@@ -5,8 +5,8 @@
 #include <vector> // std::vector
 #include <QRect>
 
-GameLoader::GameLoader(QIODevice& input_) :
-  input{input_}
+GameLoader::GameLoader(QTextStream* stream_) :
+  stream{stream_},
 {
 }
 

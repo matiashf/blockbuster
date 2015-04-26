@@ -3,15 +3,15 @@
 
 #include <functional> // std::function
 #include <vector> // std::vector
-#include <QIODevice>
+#include <QTextStream>
 
 class GameScene; // Forward declaration
 
 class GameLoader {
 private:
-  QIODevice& input;
+  QTextStream* stream;
 public:
-  GameLoader(QIODevice&);
+  GameLoader(QTextStream*);
 
   std::vector<QRect> parse();
   void load(GameScene* scene);

@@ -6,6 +6,7 @@
 #include <Box2D.h>
 #include <cmath> // pow
 #include <QFile>
+#include <QTextStream>
 
 // The meaning of these constants are explained in the header file.
 const int GameScene::kMaxVelocityIterations = 1;
@@ -88,7 +89,8 @@ void GameScene::load(QString map_url) {
   // TODO: Error handling
   QFile file{map_url};
   file.open(QIODevice::ReadOnly);
-  GameLoader loader{file}; // Pass by reference
+  QTextStream stream{&file};
+  GameLoader loader{&stream};
   loader.load(this);
   file.close();
 }
