@@ -4,16 +4,19 @@
 
 #include <iostream> // std::cerr
 
-GameLoader::GameLoader(QTextStream* stream_) :
+GameLoader::GameLoader(QTextStream* stream_, QFileInfo* file_info_) :
   stream{stream_},
   width_{0},
   height_{0}
+  file_info{file_info_}
 {
 }
 
 std::exception GameLoader::error(const char * description) {
   // FIXME: subclass runtime_exception and allow errors to be programmatically examined
   std::cerr << "Error: " << description << std::endl;
+  if (file_info != nullptr)
+    std::cerr << "In file " << file_info->absoluteFilePath().toStdString() << ", ";
   std::cerr << "on line " << lineNo << ", character " << linePos << ":" << std::endl;
   std::cerr << line.toStdString() << std::endl;
   std::cerr << std::string(linePos, ' ') << '^' << std::endl;

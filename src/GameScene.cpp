@@ -86,11 +86,12 @@ void GameScene::advance() {
 }
 
 void GameScene::load(QString map_url) {
-  // TODO: Error handling
   QFile file{map_url};
   file.open(QIODevice::ReadOnly);
+  // FIXME: Test that the file opened correctly
   QTextStream stream{&file};
-  GameLoader loader{&stream};
+  QFileInfo file_info{map_url};
+  GameLoader loader{&stream, &file_info};
   loader.load(this);
   file.close();
 }
