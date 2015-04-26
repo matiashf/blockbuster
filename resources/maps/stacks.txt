@@ -1,7 +1,5 @@
-This is a blank template map. To create a new map, save a copy of this file,
-remove the text above and below the map, and provide your own description.
-
-Remember to press INSERT on your keyboard before editing the map.
+This was the first map I wrote, when the parser only supported single
+width blocks.
 
 /--------------------------------------------------------------------------------\
 |                                                                                |
@@ -21,12 +19,9 @@ Remember to press INSERT on your keyboard before editing the map.
 |                                                                                |
 |                                                                                |
 |                                                                                |
-|                                                                                |
-|                                                                                |
-|                                                                                |
-|                                                                                |
-|                                                                                |
+| ###         ###         ###              ###            ###        ###         |
+| ###         ###         ###              ###            ###        ###         |
+| ###         ###         ###              ###            ###        ###         |
+| ###         ###         ###              ###            ###        ###         |
+| ###         ###         ###              ###            ###        ###         |
 \--------------------------------------------------------------------------------/
-
-16:9 ratio applied to 80 characters width => 45 characters height, i.e. 80:45
-Adjusted for monospace fonts (width/height of character ~1/2) => 80:22

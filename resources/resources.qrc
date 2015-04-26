@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
 <file>./maps/blank.txt</file>
+<file>./maps/stacks.txt</file>
 </qresource>
 </RCC>
