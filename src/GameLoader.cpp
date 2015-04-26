@@ -3,17 +3,16 @@
 #include "Box.hpp"
 
 #include <vector> // std::vector
-#include <QRect>
 
 GameLoader::GameLoader(QTextStream* stream_) :
   stream{stream_},
+  width_{0},
+  height_{0}
 {
 }
 
-std::vector<QRect> parse() {
+void GameLoader::parse() {
   std::vector<QRect> partial_boxes; // Boxes during parsing
-  std::vector<QRect> boxes; // Parsed boxes
-  return boxes;
 }
 
 void GameLoader::load(GameScene* scene) {
