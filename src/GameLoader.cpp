@@ -16,5 +16,13 @@ void GameLoader::parse() {
 }
 
 void GameLoader::load(GameScene* scene) {
-  scene->addItem(new Box{0, 0, scene->width(), scene->height()});
+  parse();
+  qreal width_scale = scene->width() / width();
+  qreal height_scale = scene->height() / height();
+
+  for (auto i = rects_.cbegin(); i != rects_.cend(); ++i) {
+    const QRect& r = *i;
+    scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
+                           r.width() * width_scale, r.height() * height_scale});
+  }
 }
