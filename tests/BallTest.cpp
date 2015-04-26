@@ -6,7 +6,7 @@
 class BallTest : public GameSceneTest {
 protected:
   Ball* ball;
-  qreal radius = 50.0d;
+  static constexpr qreal radius = 50.0d;
 public:
   BallTest() :
     // Create a ball in the top left corner
