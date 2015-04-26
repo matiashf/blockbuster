@@ -21,10 +21,10 @@ std::exception GameLoader::error(const char * description) {
 }
 
 void GameLoader::parse(int x, int y, QChar symbol) {
-  QChar hash{'#'};
-  if (symbol ==  hash)
+  const QChar hash{'#'}, space{' '};
+  if (symbol == hash)
     rects_.push_back(QRect{x, y, 1, 1});
-  else
+  else if (symbol != space)
     throw error("Unexpected symbol inside map");
 }
 
