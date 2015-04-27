@@ -52,3 +52,13 @@ TEST_F(GameLoaderTest, single_box_with_whitespace_under_and_after) {
   expect_parsed(QRect{0, 0, 1, 1});
   expect_dimensions(2, 2);
 }
+
+TEST_F(GameLoaderTest, horizontal_box) {
+  parse(R"(
+/---\
+|#-#|
+\---/
+)");
+  expect_parsed(QRect{0, 0, 3, 1});
+  expect_dimensions(3, 1);
+}

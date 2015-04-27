@@ -17,6 +17,7 @@ private:
   QFileInfo* file_info;
   int width_, height_; // in units of characters
   std::vector<QRect> rects_; // Parsed rects
+  QRect* current; // The rect currently open on this line
 
   QString line; // The current line, used in error message
   int lineNo, linePos; // Lines count from 1, positions within line from 0

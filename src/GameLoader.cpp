@@ -6,10 +6,12 @@
 
 GameLoader::GameLoader(QTextStream* stream_, QFileInfo* file_info_) :
   stream{stream_},
-  file_info{file_info_}
+  file_info{file_info_},
+  current{nullptr}
 {
 }
 
+/** Print a helpful error message and return an exception. */
 std::exception GameLoader::error(const char * description) {
   // FIXME: subclass runtime_exception and allow errors to be programmatically examined
   std::cerr << "Error: " << description << std::endl;
@@ -21,14 +23,23 @@ std::exception GameLoader::error(const char * description) {
   return std::runtime_error(description);
 }
 
+/** Parse the given symbol at map position (x, y) */
 void GameLoader::parse(int x, int y, QChar symbol) {
-  const QChar hash{'#'}, space{' '};
-  if (symbol == hash)
-    rects_.push_back(QRect{x, y, 1, 1});
-  else if (symbol != space)
+  constexpr QChar hash{'#'}, space{' '}, dash{'-'};
+
+  if (current != nullptr and ((symbol == dash and x != width() - 1) or (symbol == hash and current->width() > 1))) {
+    current->setRight(current->right() + 1);
+    if (symbol == hash)
+      current = nullptr;
+  } else if (symbol == hash) {
+    rects_.emplace_back(x, y, 1, 1); // Emplace: construct in place
+    current = &rects_.back();
+  } else if (symbol != space) {
     throw error("Unexpected symbol inside map");
+  }
 }
 
+/** Parse the overall structure of the map and delegate to parse(x, y, symbol). */
 void GameLoader::parse() {
   QChar slash{'/'}, backslash{'\\'}, dash{'-'}, bar{'|'};
 
