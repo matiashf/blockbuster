@@ -11,15 +11,15 @@ There are some visual challenges that must be solved in the game:
    do not appear to be one single box.
 3. Indicating that a box has taken damage.
 
-To solve these problems we use the convenient [HSL color
+To solve these problems we use the convenient [HSV color
 model](http://en.wikipedia.org/wiki/HSL_and_HSV), which describes a
 cylindrical color space using three axes; Hue, Saturation and
-Lightness. This corresponds nicely with the three visual distinctions
-we need to make in the came.
+Value. This corresponds nicely with the three visual distinctions we
+need to make in the came.
 
 Each player gets a distinct hue (a base color like red, green, etc.)
 equally spaced out in the hue color axis (from 0° to 359°). Boxes
 belonging to a player use the same hue but a different, random
 saturation level withing a reasonable interval (to avoid white boxes)
-and full lightness. When boxes take damage, they darken (i.e. get
-lower lightness) down to some minimum (to avoid black boxes).
+and full value. When boxes take damage, they darken (i.e. get lower
+value) down to some minimum (to avoid black boxes).
