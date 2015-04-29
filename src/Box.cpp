@@ -1,9 +1,25 @@
 #include "Box.hpp"
+#include "Ball.hpp"
 
 #include <cmath> // M_PI
 #include <QBrush>
 
+// Parameters to QColor::fromHsv in the range [0, 255]
+const int Box::kMinSaturation = 127;
+const int Box::kMaxSaturation = 255;
+const int Box::kMinValue = 127;
+const int Box::kMaxValue = 255;
+
+int Box::randomSaturation() {
+  return rand() % (kMaxSaturation - kMinSaturation + 1) + kMinSaturation;
+}
+
 Box::Box(qreal x, qreal y, qreal width, qreal height) :
+  Box{x, y, width, height, Ball::randomHue()}
+{
+}
+
+Box::Box(qreal x, qreal y, qreal width, qreal height, int hue) :
   // The (x, y) scene coordinates above specify where the top left
   // corner of the box is drawn. This is helpful for when we create
   // boxes on the scene based on a grid in a text file.
@@ -16,9 +32,12 @@ Box::Box(qreal x, qreal y, qreal width, qreal height) :
 
   // Determine where the box is drawn relative to its origin
   QGraphicsRectItem{-width / 2.0d, -height / 2.0d, width, height},
-  body{nullptr}
+  body{nullptr},
+  color{QColor::fromHsv(hue, randomSaturation(), kMaxValue)}
 {
-  QColor color{float(rand() % 255), float(rand() % 255), float(rand() % 255)};
+  if (!color.isValid())
+    throw std::range_error("Hue is outside of valid range");
+
   setBrush(QBrush{color});
   setPen(QPen{color});
   // Determine where the box origin is situated relative to the scene origin

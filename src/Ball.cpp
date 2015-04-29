@@ -1,16 +1,29 @@
 #include "Ball.hpp"
 #include "Arrow.hpp"
 
+#include <stdexcept> // std::range_error
 #include <QBrush>
+#include <QColor>
 
-Ball::Ball(qreal x, qreal y, qreal radius) :
+const int Ball::kNoHueSpecified = -1;
+
+int Ball::randomHue() {
+  return rand() % 360; // TODO: Use the new C++ 11 random module
+}
+
+Ball::Ball(qreal x, qreal y, qreal radius, int hue) :
   QGraphicsEllipseItem{-radius, -radius, radius * 2, radius * 2},
   body{nullptr},
-  arrow_{new Arrow{this}}
+  arrow_{new Arrow{this}},
+  // maximum saturation and value is 255, see the color section in DESIGN.md
+  color{QColor::fromHsv((hue == kNoHueSpecified) ? randomHue() : hue, 255, 255)}
 {
-  setBrush(QBrush{Qt::white});
+  if (!color.isValid())
+    throw std::range_error("Hue is outside of valid range");
+
   setPos(x + radius, y + radius);
-                                    setZValue(1); // Draw in front of boxes (which have default Z-value of 0)
+  setZValue(1); // Draw in front of boxes (which have default Z-value of 0)
+  setBrush(QBrush{color}); // Pass color by reference
 }
 
 void Ball::advance(int phase) {
