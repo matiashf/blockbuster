@@ -2,7 +2,7 @@
 #include "Arrow.hpp"
 
 #include <stdexcept> // std::range_error
-#include <QBrush>
+#include <QPainter>
 #include <QColor>
 
 const int Ball::kNoHueSpecified = -1;
@@ -12,7 +12,7 @@ int Ball::randomHue() {
 }
 
 Ball::Ball(qreal x, qreal y, qreal radius, int hue) :
-  QGraphicsEllipseItem{-radius, -radius, radius * 2, radius * 2},
+  radius_{radius},
   body{nullptr},
   arrow_{new Arrow{this}},
   // maximum saturation and value is 255, see the color section in DESIGN.md
@@ -23,7 +23,6 @@ Ball::Ball(qreal x, qreal y, qreal radius, int hue) :
 
   setPos(x + radius, y + radius);
   setZValue(1); // Draw in front of boxes (which have default Z-value of 0)
-  setBrush(QBrush{color}); // Pass color by reference
 }
 
 void Ball::advance(int phase) {
@@ -63,4 +62,13 @@ void Ball::applyImpulse() {
   bool wakeIfSleeping = true;
   body->ApplyLinearImpulse(gameScene()->mapToWorld(impulse),
                            body->GetPosition(), wakeIfSleeping);
+}
+
+void Ball::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+  Q_UNUSED(option);
+  Q_UNUSED(widget);
+
+  painter->setBrush(QBrush{color});
+  painter->setPen(QPen{color});
+  painter->drawEllipse(boundingRect());
 }

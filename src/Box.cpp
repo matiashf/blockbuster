@@ -2,7 +2,7 @@
 #include "Ball.hpp"
 
 #include <cmath> // M_PI
-#include <QBrush>
+#include <QPainter>
 
 // Parameters to QColor::fromHsv in the range [0, 255]
 const int Box::kMinSaturation = 127;
@@ -31,15 +31,13 @@ Box::Box(qreal x, qreal y, qreal width, qreal height, int hue) :
   // mass.
 
   // Determine where the box is drawn relative to its origin
-  QGraphicsRectItem{-width / 2.0d, -height / 2.0d, width, height},
+  rect_{-width / 2.0d, -height / 2.0d, width, height},
   body{nullptr},
   color{QColor::fromHsv(hue, randomSaturation(), kMaxValue)}
 {
   if (!color.isValid())
     throw std::range_error("Hue is outside of valid range");
 
-  setBrush(QBrush{color});
-  setPen(QPen{color});
   // Determine where the box origin is situated relative to the scene origin
   setPos(x + width / 2, y + height / 2);
 }
@@ -55,7 +53,7 @@ void Box::advance(int phase) {
     setRotation(radiansToDegrees(body->GetAngle()));
   }
 
-  QGraphicsRectItem::advance(phase); // Advance children
+  QGraphicsItem::advance(phase); // Advance children
 }
 
 QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
@@ -86,4 +84,13 @@ QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
     // class.
   }
   return value;
+}
+
+void Box::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+  Q_UNUSED(option);
+  Q_UNUSED(widget);
+
+  painter->setBrush(QBrush{color});
+  painter->setPen(QPen{color});
+  painter->drawRect(rect());
 }
