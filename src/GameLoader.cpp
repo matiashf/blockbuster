@@ -119,6 +119,6 @@ void GameLoader::load(GameScene* scene) {
     const QRect& r = *i;
     scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
                            r.width() * width_scale, r.height() * height_scale,
-                           scene->ball()->hue()});
+                           scene->ball()->color().hue()});
   }
 }

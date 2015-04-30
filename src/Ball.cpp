@@ -3,24 +3,18 @@
 
 #include <stdexcept> // std::range_error
 #include <QPainter>
-#include <QColor>
 
-const int Ball::kNoHueSpecified = -1;
-
-int Ball::randomHue() {
-  return rand() % 360; // TODO: Use the new C++ 11 random module
+Ball::Ball(qreal x, qreal y, qreal radius) :
+  Ball{x, y, radius, randomHue()}
+{
 }
 
 Ball::Ball(qreal x, qreal y, qreal radius, int hue) :
+  HasColor{QColor::fromHsv(hue, kMaxSaturation, kMaxValue)},
   radius_{radius},
   body{nullptr},
-  arrow_{new Arrow{this}},
-  // maximum saturation and value is 255, see the color section in DESIGN.md
-  color{QColor::fromHsv((hue == kNoHueSpecified) ? randomHue() : hue, 255, 255)}
+  arrow_{new Arrow{this}}
 {
-  if (!color.isValid())
-    throw std::range_error("Hue is outside of valid range");
-
   setPos(x + radius, y + radius);
   setZValue(1); // Draw in front of boxes (which have default Z-value of 0)
 }
@@ -68,7 +62,7 @@ void Ball::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
   Q_UNUSED(option);
   Q_UNUSED(widget);
 
-  painter->setBrush(QBrush{color});
-  painter->setPen(QPen{color});
+  painter->setBrush(QBrush{color()});
+  painter->setPen(QPen{color()});
   painter->drawEllipse(boundingRect());
 }

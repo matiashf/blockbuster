@@ -2,28 +2,21 @@
 #define BOX_HPP
 
 #include "GameScene.hpp"
+#include "HasColor.hpp"
 
 #include <QGraphicsRectItem>
 #include <QVariant>
 #include <Box2D.h>
-#include <QColor>
 
 // More on what frames of reference are used in QGraphicsScene and Box2D:
 // * http://stackoverflow.com/a/1151955/2719221
 // * http://gamedev.stackexchange.com/a/3760
 
-class Box : public QGraphicsItem {
+class Box : public QGraphicsItem, public HasColor {
 private:
   QRectF rect_;
 
-  static const int kMinSaturation;
-  static const int kMaxSaturation;
-  static const int kMinValue;
-  static const int kMaxValue;
-  static int randomSaturation();
-
   b2Body* body;
-  QColor color;
 
   inline GameScene* gameScene() {return dynamic_cast<GameScene*>(scene());}
   inline qreal radiansToDegrees(qreal radians) { return radians * 180.0d / M_PI; }
