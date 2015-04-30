@@ -3,6 +3,7 @@
 // Parameters to QColor::fromHsv in ranges [0, 255]
 const int HasColor::kMinSaturation = 127;
 const int HasColor::kMaxSaturation = 255;
+const int HasColor::kMinValue = 64;
 const int HasColor::kMaxValue = 255;
 
 HasColor::HasColor(const QColor& color) :

@@ -13,7 +13,7 @@ public:
 
   Destructible(Health);
 
-  void damage(Health);
+  virtual void damage(Health);
   inline Health health() { return health_; }
 private:
   Health health_;

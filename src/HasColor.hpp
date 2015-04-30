@@ -9,6 +9,8 @@ class HasColor {
 public:
   HasColor(const QColor&);
   inline const QColor& color() { return color_; }
+  // Set the color using copy assignment
+  inline void setColor(const QColor& color) { color_ = color; }
 protected:
   // We only implement what we need to achieve the behavior set out in DESIGN.md
   static int randomHue();
@@ -16,6 +18,7 @@ protected:
   static const int kMinSaturation;
   static const int kMaxSaturation;
   static const int kMaxValue;
+  static const int kMinValue;
 private:
   QColor color_;
 };
