@@ -1,6 +1,7 @@
 #include "GameScene.hpp"
 #include "Ball.hpp"
 #include "Box.hpp"
+#include "Arrow.hpp"
 #include "GameLoader.hpp"
 
 #include <Box2D.h>

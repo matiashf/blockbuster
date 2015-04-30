@@ -1,10 +1,10 @@
 #ifndef ARROW_HPP
 #define ARROW_HPP
 
+#include "Ball.hpp"
+
 #include <QGraphicsItem>
 #include <QTime>
-
-class Ball; // Forward declaration
 
 class Arrow : public QGraphicsItem {
 private:
@@ -21,6 +21,8 @@ private:
   static const qreal kRegenerationTime;
   static const qreal kArrowAngle;
   static const qreal kTipLength;
+
+  inline Ball* ball() { return dynamic_cast<Ball*>(parentItem()); }
 public:
   Arrow(Ball* parent);
 

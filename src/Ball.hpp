@@ -4,7 +4,7 @@
 #include "HasBody.hpp"
 #include "HasColor.hpp"
 
-#include "Arrow.hpp"
+class Arrow;
 
 class Ball : public HasBody, public HasColor {
 private:

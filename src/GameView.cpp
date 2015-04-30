@@ -1,6 +1,7 @@
 #include "GameView.hpp"
 #include "GameScene.hpp"
 #include "Ball.hpp"
+#include "Arrow.hpp"
 
 #include <QGLFormat>
 

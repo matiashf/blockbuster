@@ -4,6 +4,7 @@
 #include <QtMath>
 #include <QPainter>
 #include <cmath> // M_PI
+#include <QtMath> // qDegreesToRadians
 #include <algorithm> // std::min
 
 const qreal Arrow::kMaximumMagnitude = 500.0d; // pixel impulses
@@ -95,6 +96,7 @@ void Arrow::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 }
 
 QPointF Arrow::getImpulseVector() {
+  qreal direction = qDegreesToRadians(ball()->rotation()) + this->direction;
   qreal magnitude = std::min(available_magnitude, desired_magnitude);
   available_magnitude -= magnitude;
   qreal x = qCos(direction) * magnitude;
