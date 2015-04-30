@@ -29,6 +29,8 @@ protected:
   virtual void defineBody(b2BodyDef&) = 0;
   virtual void defineFixture(b2FixtureDef&) = 0;
   virtual b2Shape* createShape() = 0;
+
+  void destroyBody();
 private:
   b2Body* body_;
 

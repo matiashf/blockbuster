@@ -1,6 +1,7 @@
 #include "HasBody.hpp"
 
 #include <QtMath> // qRadiansToDegrees
+#include <stdexcept> // std::logic_error
 
 HasBody::HasBody(qreal x, qreal y) :
   body_{nullptr}
@@ -27,6 +28,8 @@ void HasBody::advance(int phase) {
 }
 
 void HasBody::createBody() {
+  if (body_ != nullptr)
+    throw new std::logic_error("A body has already been created.");
   b2BodyDef bodyDef;
   defineBody(bodyDef);
   bodyDef.type = b2_dynamicBody;
@@ -41,8 +44,18 @@ void HasBody::createBody() {
   delete fixtureDef.shape;
 }
 
+void HasBody::destroyBody() {
+  if (body_ == nullptr)
+    return;  // Not created yet or already destroyed
+  gameScene()->world()->DestroyBody(body_);
+  body_ = nullptr;
+}
+
 QVariant HasBody::itemChange(GraphicsItemChange change, const QVariant & value) {
-  if (change == QGraphicsItem::ItemSceneHasChanged)
+  if (change == QGraphicsItem::ItemSceneChange)
+    destroyBody();
+  if (change == QGraphicsItem::ItemSceneHasChanged and scene() != nullptr)
     createBody();
-  return value;
+
+  return QGraphicsItem::itemChange(change, value);
 }
