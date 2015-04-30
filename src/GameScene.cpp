@@ -24,6 +24,8 @@ GameScene::GameScene(QObject* parent) :
   world_{gravity},
   worldScale{ 0.5f * gravity.y * pow(kScaleFactor, 2) / height()} // meters/pixel
 {
+  world()->SetContactListener(&contact_listener);
+
   setBackgroundBrush(QBrush{Qt::black});
 
   // Create static edges for the world, so that objects can't fall out.

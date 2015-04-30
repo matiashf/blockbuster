@@ -8,6 +8,8 @@
 
 #include <Box2D.h>
 
+#include "ContactListener.hpp"
+
 class Ball;
 
 class GameScene: public QGraphicsScene {
@@ -23,6 +25,8 @@ private:
   b2Vec2 gravity;
   b2World world_;
   const qreal worldScale; // in world meters per scene pixel
+
+  ContactListener contact_listener; // Called by world when objects collide
 
   /* The constants below are given as arguments to the box2d world step
      function, and set the maximum number of iterations allowed during
