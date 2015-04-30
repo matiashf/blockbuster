@@ -34,11 +34,13 @@ public:
 
   // Called by Box2D when two objects have collided
   void PostSolve(b2Contact*, const b2ContactImpulse*);
+  static const float32 kImpulseThreshold;
+  // The exponent when calculating damage = impulse / mass**exponent
+  static const float32 kDamageReductionFromMass;
 private:
   // Deals damage to a fixture based the impulse to received in the collision
   void damage(b2Fixture*, float32 impulse_magnitude);
   // Asynchronously run the given functor after the collision phase is completed
   void delay(std::function<void(void)>);
-  static const float32 kSpecificImpulseThreshold;
 };
 #endif

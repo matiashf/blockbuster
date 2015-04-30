@@ -6,8 +6,8 @@
 #include <QTimer>
 #include <QGraphicsItem>
 
-// TODO: Increase the threshold below to a reasonable value
-const float32 ContactListener::kSpecificImpulseThreshold = 0.1f; // Unit: m/s
+const float32 ContactListener::kImpulseThreshold = 5.0f; // Unit N*s
+const float32 ContactListener::kDamageReductionFromMass = 0.2f;
 
 ContactListener::ContactListener() {}
 ContactListener::~ContactListener() {}
@@ -28,12 +28,17 @@ void ContactListener::damage(b2Fixture* fixture, float32 impulse_magnitude) {
   Destructible* destructible = dynamic_cast<Destructible*>(item);
   if (destructible == nullptr)
     return;  // the item is not a Destructible (e.g. is Ball not a Box)
-  impulse_magnitude /= body->GetMass(); // Convert from impulse to specific impulse
-  // FIXME: Assuming that the impulse is positive. Is that always true?
-  if (impulse_magnitude >= kSpecificImpulseThreshold)
-    delay([destructible, impulse_magnitude] {
-        destructible->damage(impulse_magnitude);
-      });
+  if (impulse_magnitude < 0)
+    impulse_magnitude *= -1.0f;
+  if (impulse_magnitude < kImpulseThreshold)
+    return;  // The impact was not powerful enough
+
+  // Apply mass damage reduction
+  impulse_magnitude *= pow(body->GetMass(), -kDamageReductionFromMass);
+
+  delay([destructible, impulse_magnitude] {
+      destructible->damage(impulse_magnitude);
+    });
 }
 
 /* Add the functor to the back of Qts event queue by using a single
