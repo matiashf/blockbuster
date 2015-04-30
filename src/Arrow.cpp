@@ -11,7 +11,7 @@ const qreal Arrow::kMaximumMagnitude = 1000.0d; // specific impulse (m/s)
 const qreal Arrow::kMagnitudeSteps = 10.0d; // keypresses
 const qreal Arrow::kDirectionSteps = 36.0d; // keypresses
 const qreal Arrow::kArrowLength = 50.0d; // pixels
-const qreal Arrow::kRegenerationTime = 3.0f; // seconds
+const qreal Arrow::kRegenerationTime = 1.5f; // seconds
 const qreal Arrow::kArrowAngle = M_PI / 4.0f; // radians
 const qreal Arrow::kTipLength = kArrowLength / 4.0d; // pixels
 
