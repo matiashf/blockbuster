@@ -20,6 +20,6 @@ need to make in the came.
 Each player gets a distinct hue (a base color like red, green, etc.)
 equally spaced out in the hue color axis (from 0° to 359°). Boxes
 belonging to a player use the same hue but a different, random
-saturation level withing a reasonable interval (to avoid white boxes)
+saturation level within a reasonable interval (to avoid white boxes)
 and full value. When boxes take damage, they darken (i.e. get lower
 value) down to some minimum (to avoid black boxes).
