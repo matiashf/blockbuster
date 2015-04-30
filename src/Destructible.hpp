@@ -11,8 +11,7 @@ class Destructible {
 public:
   typedef float Health;
 
-  static const Health kDefaultHealth;
-  Destructible(Health health=kDefaultHealth);
+  Destructible(Health);
 
   void damage(Health);
   inline Health health() { return health_; }

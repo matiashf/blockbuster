@@ -2,8 +2,6 @@
 
 #include <QTimer>
 
-const Destructible::Health Destructible::kDefaultHealth = 200.0f; // FIXME: Adjust
-
 Destructible::Destructible(Destructible::Health health) :
   health_{health}
 {
