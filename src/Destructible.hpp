@@ -1,12 +1,7 @@
 #ifndef DESTRUCTIBLE_HPP
 #define DESTRUCTIBLE_HPP
 
-/* A destructible object has a health counter and can be damaged and destroyed.
-
-   This class requires all bodies in the world to have their UserData
-   field either set to nullptr or point to a Destructible object,
-   otherwise a segmentation fault will occur.
-*/
+/* A destructible object has a health counter and can be damaged and destroyed. */
 class Destructible {
 public:
   typedef float Health;
