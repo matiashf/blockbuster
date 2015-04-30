@@ -7,7 +7,7 @@
 #include <QtMath> // qDegreesToRadians
 #include <algorithm> // std::min
 
-const qreal Arrow::kMaximumMagnitude = 500.0d; // pixel impulses
+const qreal Arrow::kMaximumMagnitude = 1000.0d; // specific impulse (m/s)
 const qreal Arrow::kMagnitudeSteps = 10.0d; // keypresses
 const qreal Arrow::kDirectionSteps = 36.0d; // keypresses
 const qreal Arrow::kArrowLength = 50.0d; // pixels
@@ -99,6 +99,7 @@ QPointF Arrow::getImpulseVector() {
   qreal direction = qDegreesToRadians(ball()->rotation()) + this->direction;
   qreal magnitude = std::min(available_magnitude, desired_magnitude);
   available_magnitude -= magnitude;
+  magnitude *= ball()->body()->GetMass(); // calculate impulse from specific impulse
   qreal x = qCos(direction) * magnitude;
   qreal y = qSin(direction) * magnitude;
   return QPointF{x, y};
