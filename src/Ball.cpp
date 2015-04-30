@@ -1,5 +1,6 @@
 #include "Ball.hpp"
 #include "Arrow.hpp"
+#include "GameScene.hpp"
 
 #include <stdexcept> // std::range_error
 #include <QPainter>
@@ -10,52 +11,37 @@ Ball::Ball(qreal x, qreal y, qreal radius) :
 }
 
 Ball::Ball(qreal x, qreal y, qreal radius, int hue) :
+  HasBody{x + radius, y + radius},
   HasColor{QColor::fromHsv(hue, kMaxSaturation, kMaxValue)},
   radius_{radius},
-  body{nullptr},
   arrow_{new Arrow{this}}
 {
-  setPos(x + radius, y + radius);
   setZValue(1); // Draw in front of boxes (which have default Z-value of 0)
 }
 
-void Ball::advance(int phase) {
-  // phase 0: The scene is about to advance
-  // phase 1: The scene is advancing
-
-  if (phase == 0) return;
-
-  if (body != nullptr and body->IsAwake()) {
-    setPos(gameScene()->mapFromWorld(body->GetPosition()));
-    // TODO: Apply rotation
-  }
+void Ball::defineBody(b2BodyDef& def) {
+  // Prevent the ball from ever passing through another object, at the
+  // cost of more expensive collision calculations.
+  def.bullet = true; 
 }
 
-QVariant Ball::itemChange(GraphicsItemChange change, const QVariant & value) {
-  if (change == QGraphicsItem::ItemSceneHasChanged) {
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.bullet = true; // Prevent the ball from ever passing through another object, at the cost of more expensive collision calculations.
-    bodyDef.position = gameScene()->mapToWorld(scenePos());
-    body = gameScene()->world()->CreateBody(&bodyDef); // Copies content of bodyDef
+void Ball::defineFixture(b2FixtureDef& def) {
+  def.density = 1.0f;
+  def.restitution = 0.5f;
+}
 
-    b2CircleShape shape;
-    shape.m_p.Set(0, 0); // Draw the center of the circle at the body origin
-    shape.m_radius = gameScene()->mapToWorld(radius());
-    b2FixtureDef fixtureDef;
-    fixtureDef.density = 1.0f;
-    fixtureDef.restitution = 0.5f;
-    fixtureDef.shape = &shape;
-    body->CreateFixture(&fixtureDef); // Deep copies fixtureDef.
-  }
-  return value;
+b2Shape* Ball::createShape() {
+  b2CircleShape* shape = new b2CircleShape;
+  shape->m_p.Set(0, 0); // Draw the center of the circle at the body origin
+  shape->m_radius = gameScene()->mapToWorld(radius());
+  return shape;
 }
 
 void Ball::applyImpulse() {
   QPointF impulse = arrow()->getImpulseVector();
   bool wakeIfSleeping = true;
-  body->ApplyLinearImpulse(gameScene()->mapToWorld(impulse),
-                           body->GetPosition(), wakeIfSleeping);
+  body()->ApplyLinearImpulse(gameScene()->mapToWorld(impulse),
+                             body()->GetPosition(), wakeIfSleeping);
 }
 
 void Ball::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

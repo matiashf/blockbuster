@@ -1,6 +1,5 @@
 #include "Box.hpp"
 
-#include <cmath> // M_PI
 #include <QPainter>
 
 Box::Box(qreal x, qreal y, qreal width, qreal height) :
@@ -19,57 +18,28 @@ Box::Box(qreal x, qreal y, qreal width, qreal height, int hue) :
   // box has uniform weight distribution, this is also the center of
   // mass.
 
-  // Determine where the box is drawn relative to its origin
-  HasColor{QColor::fromHsv(hue, randomSaturation(), kMaxValue)},
-  rect_{-width / 2.0d, -height / 2.0d, width, height},
-  body{nullptr}
-{
   // Determine where the box origin is situated relative to the scene origin
-  setPos(x + width / 2, y + height / 2);
+  HasBody{x + width / 2, y + height / 2},
+  HasColor{QColor::fromHsv(hue, randomSaturation(), kMaxValue)},
+  // Determine where the box is drawn relative to its local origin
+  rect_{-width / 2.0d, -height / 2.0d, width, height}
+{
 }
 
-void Box::advance(int phase) {
-  // phase 0: The scene is about to advance
-  // phase 1: The scene is advancing
-
-  if (phase == 0) return;
-
-  if (body != nullptr and body->IsAwake()) {
-    setPos(gameScene()->mapFromWorld(body->GetPosition()));
-    setRotation(radiansToDegrees(body->GetAngle()));
-  }
-
-  QGraphicsItem::advance(phase); // Advance children
+void Box::defineBody(b2BodyDef& def) {
+  def.angularDamping = 1.0f; // Increase the angular inertia (i.e. spin less)
 }
 
-QVariant Box::itemChange(GraphicsItemChange change, const QVariant & value) {
-  // TODO: Handle item being removed from scene
-  if (change == QGraphicsItem::ItemSceneHasChanged) {
-    // Create a Box2D body using a temporary body definition
-    b2BodyDef bodyDef;
-    bodyDef.userData = reinterpret_cast<void*>(this); // For collision callbacks
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position = gameScene()->mapToWorld(scenePos());
-    bodyDef.angularDamping = 1.0f; // Increase the angular inertia (i.e. spin less)
-    body = gameScene()->world()->CreateBody(&bodyDef); // Copies content of bodyDef
+void Box::defineFixture(b2FixtureDef& def) {
+  def.density = 1.0f;
+  def.restitution = 0.1f;
+}
 
-    // Attach a fixture (with a shape) to the body using a temporary
-    // fixture definition.
-    b2PolygonShape shape;
-    shape.SetAsBox(gameScene()->mapToWorld(width() / 2.0d),
-                   gameScene()->mapToWorld(height() / 2.0d));
-    b2FixtureDef fixtureDef;
-    fixtureDef.density = 1.0f;
-    fixtureDef.restitution = 0.1f;
-    fixtureDef.shape = &shape;
-    body->CreateFixture(&fixtureDef); // Deep copies fixtureDef.
-
-    // The shape is owned by the fixture, the fixture is owned by the
-    // body, the body is owned by the world, and the world is owned by
-    // the scene. No further memory management is required in this
-    // class.
-  }
-  return value;
+b2Shape* Box::createShape() {
+  b2PolygonShape* shape = new b2PolygonShape;
+  shape->SetAsBox(gameScene()->mapToWorld(width() / 2.0d),
+                  gameScene()->mapToWorld(height() / 2.0d));
+  return shape;
 }
 
 void Box::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
