@@ -57,6 +57,7 @@ void Arrow::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, Q
     return;
 
   // Unit vectors
+  qreal direction = this->direction - qDegreesToRadians(ball()->rotation());
   qreal x = qCos(direction), y = qSin(direction);
 
   const qreal scale = kArrowLength / kMaximumMagnitude;
@@ -96,7 +97,7 @@ void Arrow::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 }
 
 QPointF Arrow::getImpulseVector() {
-  qreal direction = qDegreesToRadians(ball()->rotation()) + this->direction;
+  qreal direction = qDegreesToRadians(rotation()) + this->direction;
   qreal magnitude = std::min(available_magnitude, desired_magnitude);
   available_magnitude -= magnitude;
   magnitude *= ball()->body()->GetMass(); // calculate impulse from specific impulse
