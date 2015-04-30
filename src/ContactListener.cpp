@@ -4,6 +4,7 @@
 #include <Box2D/Dynamics/Contacts/b2Contact.h>
 #include <cmath> // std::isnan
 #include <QTimer>
+#include <QGraphicsItem>
 
 // TODO: Increase the threshold below to a reasonable value
 const float32 ContactListener::kSpecificImpulseThreshold = 0.1f; // Unit: m/s
@@ -23,10 +24,10 @@ void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impu
    UserData() pointer) and deals damage to it. */
 void ContactListener::damage(b2Fixture* fixture, float32 impulse_magnitude) {
   b2Body* body = fixture->GetBody();
-  return; // FIXME: The cast below segfaults
-  Destructible* destructible = static_cast<Destructible*>(body->GetUserData());
+  QGraphicsItem* item = reinterpret_cast<QGraphicsItem*>(body->GetUserData());
+  Destructible* destructible = dynamic_cast<Destructible*>(item);
   if (destructible == nullptr)
-    return;  // the body did not point to a Destructible (e.g. points to a Ball)
+    return;  // the item is not a Destructible (e.g. is Ball not a Box)
   impulse_magnitude /= body->GetMass(); // Convert from impulse to specific impulse
   // FIXME: Assuming that the impulse is positive. Is that always true?
   if (impulse_magnitude >= kSpecificImpulseThreshold)

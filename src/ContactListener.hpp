@@ -19,6 +19,12 @@
    collisions, so adding or removing objects from the callbacks is not
    allowed. To avoid this problem we delay the call to Destructible
    until after the physics engine is done working.
+
+   All user data pointers on b2body objects MUST be a reinterpret_cast
+   from QGraphicsItem* to void*. This holds true in our game (they are
+   set in HasBody only), but it somehow feels brittle. Maybe the Box2D
+   developers could have provided us with something more type safe
+   than void pointers?
 */
 class ContactListener : public QObject, public b2ContactListener {
   Q_OBJECT
