@@ -17,6 +17,9 @@ GameView::GameView(GameScene* scene_, QWidget* parent) :
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
   setMinimumSize(1280, 720); // HD resolution
   setFrameShape(QFrame::NoFrame); // Hide 1px border, avoid scrollbars
+
+  // Send events to the scene to allow for keyboard input.
+  installEventFilter(scene_);
 }
 
 void GameView::resizeEvent(QResizeEvent * event) {

@@ -3,11 +3,13 @@
 #include "Box.hpp"
 #include "Arrow.hpp"
 #include "GameLoader.hpp"
+#include "Player.hpp"
 
 #include <Box2D.h>
 #include <cmath> // pow
 #include <QFile>
 #include <QTextStream>
+#include <Qt> // Qt::FindDirectChildrenOnly
 
 // The meaning of these constants are explained in the header file.
 const int GameScene::kMaxVelocityIterations = 1;
@@ -93,4 +95,14 @@ void GameScene::load(QString map_url) {
   GameLoader loader{&stream, &file_info};
   loader.load(this);
   file.close();
+}
+
+bool GameScene::eventFilter(QObject * watched, QEvent * event) {
+  QList<Player *> players = findChildren<Player *>(QString(),
+                                                   Qt::FindDirectChildrenOnly);
+
+  for (Player* player : players)
+    if (player->eventFilter(watched, event))
+      return true; // The event was not processed
+  return false; // The event was processed
 }

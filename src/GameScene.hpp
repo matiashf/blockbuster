@@ -77,6 +77,9 @@ public slots:
   void toggle();
   void advance(qreal milliseconds);
   void advance();
+protected:
+  // Delegates events from the view to players
+  bool eventFilter(QObject * watched, QEvent * event);
 };
 
 #endif
