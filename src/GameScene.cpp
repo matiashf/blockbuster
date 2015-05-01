@@ -4,6 +4,7 @@
 #include "Arrow.hpp"
 #include "GameLoader.hpp"
 #include "Player.hpp"
+#include "KeyboardPlayer.hpp"
 
 #include <Box2D.h>
 #include <cmath> // pow
@@ -45,6 +46,7 @@ GameScene::GameScene(QObject* parent) :
      simply dropping frames. */
 
   addItem(ball());
+  new KeyboardPlayer(this, ball()); // Garbage collected by Qt
 }
 
 /** Create a static (non-moving) line between the two points. Used to
