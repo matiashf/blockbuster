@@ -2,29 +2,36 @@
 
 #include <QKeyEvent>
 
+KeyboardPlayer::KeyboardPlayer(GameScene* scene, Ball* ball, Qt::Key up,
+                               Qt::Key down, Qt::Key left, Qt::Key right,
+                               Qt::Key apply) :
+  Player{scene, ball},
+  up_key{up},
+  down_key{down},
+  left_key{left},
+  right_key{right},
+  apply_key{apply}
+{
+}
+
 bool KeyboardPlayer::eventFilter(QObject * watched, QEvent * event) {
+  Q_UNUSED(watched);
   if (event->type() == QEvent::KeyPress) {
     QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
-    switch (keyEvent->key()) {
-    case Qt::Key_Up:
+    int key = keyEvent->key();
+    if (key == up_key)
       increaseImpulse();
-      break;
-    case Qt::Key_Down:
+    else if (key == down_key)
       decreaseImpulse();
-      break;
-    case Qt::Key_Left:
+    else if (key == left_key)
       rotateLeft();
-      break;
-    case Qt::Key_Right:
+    else if (key == right_key)
       rotateRight();
-      break;
-    case Qt::Key_Space:
+    else if (key == apply_key)
       applyImpulse();
-      break;
-    default:
+    else
       return false;  // Continue processing the event
-    }
-    return true;  // Stop processing the event
+    return true;  // Stop processing the event (because it was handled here)
   }
 
   return false;  // Continue processing the event

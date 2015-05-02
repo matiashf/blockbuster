@@ -46,7 +46,7 @@ GameScene::GameScene(QObject* parent) :
      simply dropping frames. */
 
   addItem(ball());
-  new KeyboardPlayer(this, ball()); // Garbage collected by Qt
+  new KeyboardPlayer(this, ball(), Qt::Key_Up, Qt::Key_Down, Qt::Key_Left, Qt::Key_Right, Qt::Key_Space);
 }
 
 /** Create a static (non-moving) line between the two points. Used to
