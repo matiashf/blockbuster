@@ -10,14 +10,15 @@ make
 bin/blockbuster
 ```
 
-## Building and running on Ubuntu 14.04 with vagrant
+## Building and testing on Ubuntu 14.04 with vagrant
 
 ```shell
+make distclan
 vagrant up
 vagrant ssh
 cd /vagrant
-qmake && make clean all
-bin/blockbuster
+qmake
+make test
 ```
 
 ## Running tests

@@ -47,8 +47,10 @@ private:
   // The number of times per seconds advance() should be called
   static const qreal kFrameRate;
 
+  // The dimensions of the scene in pixels
   static const int kSceneWidth, kSceneHeight;
 
+  // Helper method used to construct the ground, walls and ceiling of the scene
   void addEdgeLine(QPointF, QPointF);
 public:
   GameScene(QObject* parent=0);
@@ -69,6 +71,7 @@ public:
     return b2Vec2{mapToWorld(x), mapToWorld(y)};
   }
 
+  // Loads the given map using a GameLoader. Does not clear the scene.
   void load(QString map_url);
 
 public slots:
