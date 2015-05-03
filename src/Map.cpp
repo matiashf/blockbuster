@@ -60,6 +60,7 @@ void Map::parse(int x, int y, QChar symbol) {
 void Map::parse(QTextStream* stream) {
   QChar slash{'/'}, backslash{'\\'}, dash{'-'}, bar{'|'};
 
+  current = nullptr;
   lineNo = 1;
   linePos = 0;
   width_ = 0;
