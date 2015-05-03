@@ -2,7 +2,6 @@
 #include "Ball.hpp"
 #include "Box.hpp"
 #include "Arrow.hpp"
-#include "Map.hpp"
 #include "Player.hpp"
 #include "KeyboardPlayer.hpp"
 
@@ -88,11 +87,6 @@ void GameScene::advance(qreal milliseconds) {
 
 void GameScene::advance() {
   advance(clock.restart());
-}
-
-void GameScene::load(QString map_url) {
-  Map map{map_url};
-  map.load(this);
 }
 
 bool GameScene::eventFilter(QObject * watched, QEvent * event) {

@@ -7,6 +7,11 @@
 #include <QFileInfo>
 #include <QFile>
 
+Map::Map(const char* map_url) :
+  Map{QString{map_url}}
+{
+}
+
 Map::Map(QString map_url) :
   filename{QFileInfo{map_url}.absoluteFilePath()}
 {
@@ -120,14 +125,14 @@ void Map::parse(QTextStream* stream) {
   // All lines after the end of the map are ignored
 }
 
-void Map::load(GameScene* scene) {
-  qreal width_scale = scene->width() / width();
-  qreal height_scale = scene->height() / height();
+void Map::loadInto(GameScene& scene) {
+  qreal width_scale = scene.width() / width();
+  qreal height_scale = scene.height() / height();
 
   for (auto i = rects_.cbegin(); i != rects_.cend(); ++i) {
     const QRect& r = *i;
     // FIXME: Connect the box to a ball
-    scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
-                           r.width() * width_scale, r.height() * height_scale});
+    scene.addItem(new Box{r.x() * width_scale, r.y() * height_scale,
+                          r.width() * width_scale, r.height() * height_scale});
   }
 }

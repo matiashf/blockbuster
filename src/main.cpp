@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QApplication application{argc, argv};
     GameScene scene;
     GameView view{&scene};
-    scene.load(":/maps/stacks.txt");
+    scene.load(Map{":/maps/stacks.txt"});
     scene.start();
 
     view.showNormal();

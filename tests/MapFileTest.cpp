@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <QDir>
-#include <QString>
 #include <string> // std::string
 
 #include "GameSceneTest.cpp"
+#include "Map.hpp"
 
 /* Use std::string instead of QString to get nicer error
    messages. QString doesn't play well with the google test framework
@@ -28,5 +28,6 @@ TEST_P(MapFileTest, load) {
   // Simply load the map. We can't really test for anything else,
   // because this test gets run for every map. The intention is simply
   // to avoid shipping maps that crash the game.
-  scene.load(QString{GetParam().c_str()});
+  Map map{GetParam().c_str()};
+  map.loadInto(scene);
 }

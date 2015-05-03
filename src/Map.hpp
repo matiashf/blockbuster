@@ -15,6 +15,11 @@ class GameScene; // Forward declaration
     The Map class parses a map file into an intermediate data
     structure without creating actual QGraphicItem objects. This makes
     it easier to write unit tests for the parser.
+
+    Instead of telling the scene to load the map, we tell the map to
+    load itself into the scene. This makes it possible for the scene
+    to not know anything about the items placed in it (reducing
+    coupling).
  */
 class Map {
 private:
@@ -30,10 +35,14 @@ private:
   void parse(int x, int y, QChar symbol);
   void parse(QTextStream* stream);
 public:
-  // Opens and parses the file at the given path/url
+  /// Convenience constructor calls Map{QString{map_url}}
+  Map(const char* map_url);
+  /// Opens and parses the file at the given path/url
   Map(QString map_url);
+  /// Parses from the given QTextStream. Used in tests.
   Map(QTextStream* stream);
-  void load(GameScene* scene);
+  /// Create items on the scene based on the parsed map
+  void loadInto(GameScene& scene);
 
   // Expose some internal structure to allow for testing
   inline int width() const { return width_; }

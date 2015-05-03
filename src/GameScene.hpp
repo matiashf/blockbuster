@@ -86,9 +86,6 @@ public:
     return b2Vec2{mapToWorld(x), mapToWorld(y)};
   }
 
-  /// Loads the given map file using a Map object. Does not clear the scene.
-  void load(QString map_url);
-
   /// Seconds of elapsed game time since the last frame.
   inline qreal timestep() const { return timestep_; }
 
