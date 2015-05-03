@@ -3,9 +3,9 @@
 
 [C++ programming project](https://github.com/hioa-cs/cpp_v2015/blob/master/prosjektoppgave/prosjektoppgave.md),
 spring 2015. By [Matias Hermanrud Fjeld](http://github.com/matiashf).
-
-At the beginning of the project I wrote [a prototype](prototype.md)
-and a [project description (Norwegian)](prosjektbeskrivelse.md).
+At the beginning of the project I went through a [prototype
+phase](prototype.md) and wrote a [project description
+(Norwegian)](prosjektbeskrivelse.md).
 
 ## Building and running
 
@@ -16,7 +16,7 @@ make
 bin/blockbuster
 ```
 
-# Playing the game
+## Playing the game
 
 Each player controls their ball with the keyboard. The objective of
 the game is to destroy the other players boxes (the ones having
@@ -47,7 +47,7 @@ windowed mode and S stepping forward in time while the game is paused.
 
 ```shell
 cp resources/maps/blank.txt mymap.txt
-# Edit mymap.txt. Make sure you use insert mode.
+gedit mymap.txt # Make sure you use insert mode.
 bin/blockbuster mymap.txt
 ```
 
@@ -59,6 +59,12 @@ touch resources/maps/mynewmap.txt
 cd resources
 rcc -project | grep -v ./resources.qrc > resources.qrc
 ```
+
+## Known issues
+
+* The game seems to have a sporadic rendering 
+
+# Development
 
 ## Running tests
 
@@ -102,7 +108,7 @@ unstable. This is not dependent on the build environment (a binary
 file that behaves strangely in the virtual environment runs fine when
 not virtualized). If you know why, please let me know.
 
-# Architecture
+## Architecture
 
 The game uses Qt, the application framework, and Box2D, a constraint
 based physics engine. Building is done with qmake. Documentation is
@@ -112,13 +118,7 @@ and timers to control execution flow in a single thread.
 
 ![Class diagram](classes.png)
 
-## Portability
-
-Although the game was written to be portable, the build system uses
-some unix-specific Makefile commands to run tests. It has been tested
-with Ubuntu 14.04 and 14.10.
-
-## Scene, view and items
+### Scene, view and items
 
 The GameScene is the central class of the project. It owns most of the
 objects in the game, including the simulated physics world. It is a
@@ -134,14 +134,14 @@ connected with a body in the simulated physics world. The Colored and
 Destructible classes are mixed in to item classes to modify their
 behaviour.
 
-## Box2D
+### Box2D
 
 Most of the integration with Box2D happens in PhysicalItem and
 ContactListener. The GameScene also has methods to scale between scene
 coordinates (in pixels) and world coordinates (in meters). Time is
 synchronised with the GameScene#timestep() method.
 
-## Players
+### Players
 
 The Player class is an abstract class for controlling a ball. The
 KeyboardPlayer listens to specific keys and does manual key repetition
@@ -151,7 +151,7 @@ Player classes are event-driven. They receive events from the GameView
 (such as keypresses and -releases), or they can use a QTimer to send
 them timeout events.
 
-## Maps
+### Maps
 
 The Map class parses and loads map files. Map files look like this:
 
@@ -178,3 +178,9 @@ have looked like this:
 
 Box ownership is determined automatically based on box position. Only
 two KeyboardPlayers are supported at the moment (In Map::loadInto).
+
+### Portability
+
+Although the game was written to be portable, the build system uses
+some unix-specific Makefile commands to run tests. It has been tested
+with Ubuntu 14.04 and 14.10.
