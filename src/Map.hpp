@@ -7,6 +7,7 @@
 #include <QRect>
 #include <QString>
 #include <QChar>
+#include <QPoint>
 
 class GameScene; // Forward declaration
 
@@ -26,6 +27,7 @@ private:
   QString filename;
   int width_, height_; // in units of characters
   std::vector<QRect> rects_; // Parsed rects
+  std::vector<QPoint> balls_; // Parsed balls
   QRect* current; // The rect currently open on this line
 
   QString line; // The current line, used in error message
@@ -42,12 +44,13 @@ public:
   /// Parses from the given QTextStream. Used in tests.
   Map(QTextStream* stream);
   /// Create items on the scene based on the parsed map
-  void loadInto(GameScene& scene);
+  void loadInto(GameScene* scene) const;
 
   // Expose some internal structure to allow for testing
   inline int width() const { return width_; }
   inline int height() const { return height_; }
   inline const std::vector<QRect>* rects() const { return &rects_; };
+  inline const std::vector<QPoint>* balls() const { return &balls_; };
 };
 
 #endif

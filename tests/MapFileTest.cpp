@@ -29,5 +29,5 @@ TEST_P(MapFileTest, load) {
   // because this test gets run for every map. The intention is simply
   // to avoid shipping maps that crash the game.
   Map map{GetParam().c_str()};
-  map.loadInto(scene);
+  map.loadInto(&scene);
 }

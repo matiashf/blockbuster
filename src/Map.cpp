@@ -7,6 +7,7 @@
 #include <iostream> // std::cerr
 #include <QFileInfo>
 #include <QFile>
+#include <algorithm> // std::min
 
 Map::Map(const char* map_url) :
   Map{QString{map_url}}
@@ -42,7 +43,7 @@ std::exception Map::error(const char * description) {
 
 /** Parse the given symbol at map position (x, y) */
 void Map::parse(int x, int y, QChar symbol) {
-  constexpr QChar hash{'#'}, space{' '}, dash{'-'};
+  constexpr QChar hash{'#'}, space{' '}, dash{'-'}, star{'*'};
 
   if (current != nullptr and ((symbol == dash and x != width() - 1) or (symbol == hash and current->width() > 1))) {
     current->setRight(current->right() + 1);
@@ -51,6 +52,8 @@ void Map::parse(int x, int y, QChar symbol) {
   } else if (symbol == hash) {
     rects_.emplace_back(x, y, 1, 1); // Emplace: construct in place
     current = &rects_.back();
+  } else if (symbol == star) {
+    balls_.emplace_back(x, y);
   } else if (symbol != space) {
     throw error("Unexpected symbol inside map");
   }
@@ -127,21 +130,33 @@ void Map::parse(QTextStream* stream) {
   // All lines after the end of the map are ignored
 }
 
-void Map::loadInto(GameScene& scene) {
-  qreal width_scale = scene.width() / width();
-  qreal height_scale = scene.height() / height();
+void Map::loadInto(GameScene* const scene) const {
+  qreal width_scale = scene->width() / width();
+  qreal height_scale = scene->height() / height();
+  qreal ball_radius = std::max(width_scale, height_scale) / 2.0f;
 
-  Ball* b1 = new Ball{0, 0, 25.0f};
-  scene.addItem(b1);
-  new KeyboardPlayer(&scene, b1, Qt::Key_W, Qt::Key_S, Qt::Key_A, Qt::Key_D, Qt::Key_Space);
-  Ball* b2 = new Ball{width() - 50.0f, 0, 25.0f};
-  scene.addItem(b2);
-  new KeyboardPlayer(&scene, b2, Qt::Key_Up, Qt::Key_Down, Qt::Key_Left, Qt::Key_Right, Qt::Key_Return);
+  // Balls
+  std::vector<Ball*> ballItems;
+  for (unsigned int i = 0; i < balls()->size(); i++) {
+    const QPoint& point = balls()->at(i);
+    ballItems.push_back(new Ball{point.x() * width_scale,
+                                 point.y() * height_scale,
+                                 ball_radius});
+    scene->addItem(ballItems.back());
+  }
 
-  for (auto i = rects_.cbegin(); i != rects_.cend(); ++i) {
-    const QRect& r = *i;
+  // Players
+  if (ballItems.size() > 0)
+    new KeyboardPlayer(scene, ballItems.at(0), Qt::Key_Up, Qt::Key_Down,
+                       Qt::Key_Left, Qt::Key_Right, Qt::Key_Return);
+  if (ballItems.size() > 1)
+    new KeyboardPlayer(scene, ballItems.at(1),
+                       Qt::Key_W, Qt::Key_S, Qt::Key_A, Qt::Key_D, Qt::Key_Space);
+
+  // Boxes
+  for (const QRect& r : rects_) {
     // FIXME: Connect the box to a ball
-    scene.addItem(new Box{r.x() * width_scale, r.y() * height_scale,
+    scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
                           r.width() * width_scale, r.height() * height_scale});
   }
 }
