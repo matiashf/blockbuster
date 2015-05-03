@@ -4,20 +4,30 @@
 #include "Ball.hpp"
 
 #include <iostream> // std::cerr
+#include <QFileInfo>
+#include <QFile>
 
-Map::Map(QTextStream* stream_, QFileInfo* file_info_) :
-  stream{stream_},
-  file_info{file_info_},
-  current{nullptr}
+Map::Map(QString map_url) :
+  filename{QFileInfo{map_url}.absoluteFilePath()}
 {
+  QFile file{filename};
+  file.open(QIODevice::ReadOnly);
+  // FIXME: Test that the file opened correctly
+  QTextStream stream{&file};
+  parse(&stream);
+  file.close();
+}
+
+Map::Map(QTextStream* stream) {
+  parse(stream);
 }
 
 /** Print a helpful error message and return an exception. */
 std::exception Map::error(const char * description) {
   // FIXME: subclass runtime_exception and allow errors to be programmatically examined
   std::cerr << "Error: " << description << std::endl;
-  if (file_info != nullptr)
-    std::cerr << "In file " << file_info->absoluteFilePath().toStdString() << ", ";
+  if (not filename.isNull())
+    std::cerr << "In file " << filename.toStdString() << ", ";
   std::cerr << "on line " << lineNo << ", character " << linePos << ":" << std::endl;
   std::cerr << line.toStdString() << std::endl;
   std::cerr << std::string(linePos, ' ') << '^' << std::endl;
@@ -41,7 +51,7 @@ void Map::parse(int x, int y, QChar symbol) {
 }
 
 /** Parse the overall structure of the map and delegate to parse(x, y, symbol). */
-void Map::parse() {
+void Map::parse(QTextStream* stream) {
   QChar slash{'/'}, backslash{'\\'}, dash{'-'}, bar{'|'};
 
   lineNo = 1;
@@ -111,7 +121,6 @@ void Map::parse() {
 }
 
 void Map::load(GameScene* scene) {
-  parse();
   qreal width_scale = scene->width() / width();
   qreal height_scale = scene->height() / height();
 

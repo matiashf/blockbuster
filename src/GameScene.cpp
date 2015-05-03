@@ -91,14 +91,8 @@ void GameScene::advance() {
 }
 
 void GameScene::load(QString map_url) {
-  QFile file{map_url};
-  file.open(QIODevice::ReadOnly);
-  // FIXME: Test that the file opened correctly
-  QTextStream stream{&file};
-  QFileInfo file_info{map_url};
-  Map map{&stream, &file_info};
+  Map map{map_url};
   map.load(this);
-  file.close();
 }
 
 bool GameScene::eventFilter(QObject * watched, QEvent * event) {

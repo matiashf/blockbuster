@@ -4,7 +4,6 @@
 #include <vector> // std::vector
 #include <stdexcept> // std::exception
 #include <QTextStream>
-#include <QFileInfo>
 #include <QRect>
 #include <QString>
 #include <QChar>
@@ -19,8 +18,7 @@ class GameScene; // Forward declaration
  */
 class Map {
 private:
-  QTextStream* stream;
-  QFileInfo* file_info;
+  QString filename;
   int width_, height_; // in units of characters
   std::vector<QRect> rects_; // Parsed rects
   QRect* current; // The rect currently open on this line
@@ -30,15 +28,17 @@ private:
 
   std::exception error(const char*);
   void parse(int x, int y, QChar symbol);
+  void parse(QTextStream* stream);
 public:
-  Map(QTextStream* stream, QFileInfo* file_info=nullptr);
+  // Opens and parses the file at the given path/url
+  Map(QString map_url);
+  Map(QTextStream* stream);
   void load(GameScene* scene);
 
   // Expose some internal structure to allow for testing
   inline int width() const { return width_; }
   inline int height() const { return height_; }
   inline const std::vector<QRect>* rects() const { return &rects_; };
-  void parse();
 };
 
 #endif

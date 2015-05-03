@@ -5,21 +5,27 @@
 #include "Map.hpp"
 
 class MapTest : public ::testing::Test {
+public:
+  MapTest() : map{nullptr} {}
+  ~MapTest() {
+    if (map != nullptr)
+      delete map;
+  }
 protected:
-  QString string;
-  QTextStream stream;
-  Map loader{&stream};
+  Map* map;
 
   void parse(const char * cstring) {
-    string.clear();
-    string.append(cstring);
-    stream.setString(&string, QIODevice::ReadOnly);
-    loader.parse();
+    ASSERT_TRUE(map == nullptr);
+
+    QString string{cstring};
+    QTextStream stream{&string, QIODevice::ReadOnly};
+    map = new Map{&stream};
   }
 
   void expect_parsed(const QRect& expected) {
-    ASSERT_EQ(1, loader.rects()->size());
-    const QRect& actual = loader.rects()->back();
+    ASSERT_TRUE(map != nullptr);
+    ASSERT_EQ(1, map->rects()->size());
+    const QRect& actual = map->rects()->back();
     EXPECT_EQ(expected.x(), actual.x());
     EXPECT_EQ(expected.y(), actual.y());
     EXPECT_EQ(expected.width(), actual.width());
@@ -27,8 +33,9 @@ protected:
   }
  
   void expect_dimensions(int width, int height) {
-    EXPECT_EQ(width, loader.width());
-    EXPECT_EQ(height, loader.height());
+    ASSERT_TRUE(map != nullptr);
+    EXPECT_EQ(width, map->width());
+    EXPECT_EQ(height, map->height());
   }
 };
 
