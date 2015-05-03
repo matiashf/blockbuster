@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     Map{map_url}.loadInto(&scene);
     scene.start();
 
-    view.showNormal();
+    view.showFullScreen();
 
     return application.exec();
 }
