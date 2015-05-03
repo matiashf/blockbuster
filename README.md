@@ -38,8 +38,7 @@ windowed mode and S stepping forward in time while the game is paused.
 ## Generating documentation
 
 ```shell
-make doc
-# The documentation opens automatically in your browser
+make doc # Opens a tab in your browser
 ```
 
 Note that `make clean` does not remove generated documentation. To
@@ -94,15 +93,16 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 The game uses Qt, the application framework, and Box2D, a constraint
 based physics engine. Building is done with qmake. Documentation is
 generated with Doxygen. Testing is performed using the GoogleTest
-library.
+library. The game is event-driven and uses Qt events, signals, slots
+and timers to control execution flow.
 
 ![Class diagram](classes.png)
 
 ## Portability
 
 Although the game was written to be portable, the build system uses
-some unix-specific Makefile commands to run tests. It has only been
-tested with Ubuntu 14.04 and 14.10.
+some unix-specific Makefile commands to run tests. It has been tested
+with Ubuntu 14.04 and 14.10.
 
 ## Scene, view and items
 
@@ -138,6 +138,10 @@ synchronised with the GameScene#timestep() method.
 The Player class is an abstract class for controlling a ball. The
 KeyboardPlayer listens to specific keys and does manual key repetition
 to obtain smooth movement.
+
+Player classes are event-driven. They receive events from the GameView
+(such as keypresses and -releases), or they can use a QTimer to send
+them timeout events.
 
 ## maps
 
