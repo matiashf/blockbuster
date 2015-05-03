@@ -57,9 +57,11 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 ## Running tests
 
 ```shell
-qmake
 make test
 ```
+
+You can get more information about how to customize test runs with
+`bin/test --help`.
 
 ## Generating documentation
 
