@@ -1,5 +1,5 @@
-#ifndef HAS_COLOR_HPP
-#define HAS_COLOR_HPP
+#ifndef COLORED_HPP
+#define COLORED_HPP
 
 #include <QColor>
 

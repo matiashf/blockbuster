@@ -1,5 +1,5 @@
-#ifndef HAS_BODY_HPP
-#define HAS_BODY_HPP
+#ifndef PHYSICAL_ITEM_HPP
+#define PHYSICAL_ITEM_HPP
 
 #include "GameItem.hpp"
 
