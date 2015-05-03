@@ -27,7 +27,7 @@
     right and y pointing *down*. The physical world has the same
     orientation and origin as the scene, but measures distance in
     meters instead of pixels. The mapToWorld and mapFromWorld
-    functions are used to translate from one reference system to the other.
+    functions are used to scale from one reference system to the other.
 */
 class GameScene: public QGraphicsScene {
   Q_OBJECT

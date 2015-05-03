@@ -1,4 +1,4 @@
-# dave3605-project
+# blockbuster
 C++ programming project spring 2015
 
 ## Building and running
@@ -23,7 +23,7 @@ remove it, run `rm -rf doc`.
 ## Building and testing on Ubuntu 14.04 with vagrant
 
 ```shell
-make distclan
+make distclean
 vagrant up
 vagrant ssh
 cd /vagrant
@@ -37,6 +37,31 @@ make test
 qmake
 make test
 ```
+
+# Playing the game
+
+## Overview
+
+## Controls
+
+# Architecture
+
+The game uses Qt and QGraphicsView.
+
+## Scene, view and items
+
+## Boxes and balls
+
+## Box2D
+
+* Bodies
+* CollisionCallback
+
+# maps
+
+## The GameLoader
+
+
 
 ## Inspiration
 
