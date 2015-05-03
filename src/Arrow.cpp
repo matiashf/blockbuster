@@ -16,7 +16,7 @@ const qreal Arrow::kArrowAngle = M_PI / 4.0f; // radians
 const qreal Arrow::kTipLength = kArrowLength / 4.0d; // pixels
 
 Arrow::Arrow(Ball* parent) :
-  QGraphicsItem{parent},
+  GameItem{parent},
   direction{-M_PI / 2.0}, // Straight up
   desired_magnitude{kMaximumMagnitude},
   available_magnitude{0},

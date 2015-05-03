@@ -1,9 +1,7 @@
 #ifndef HAS_BODY_HPP
 #define HAS_BODY_HPP
 
-#include "GameScene.hpp"
-
-#include <QGraphicsItem>
+#include "GameItem.hpp"
 
 // More on what frames of reference are used in QGraphicsScene and Box2D:
 // * http://stackoverflow.com/a/1151955/2719221
@@ -20,15 +18,13 @@
     body, the body is owned by the world, and the world is owned by
     the scene. No further memory management is required in this
     class. */
-class PhysicalItem : public QGraphicsItem {
+class PhysicalItem : public GameItem {
 public:
   /// Places the graphic item at the given scene coordinates
   PhysicalItem(qreal x, qreal y);
   virtual ~PhysicalItem();
 
   inline b2Body* body() { return body_; };
-
-  inline GameScene* gameScene() {return dynamic_cast<GameScene*>(scene());}
 
   /// Sets scene position and orientation from its body in the world
   void advance(int phase) override;

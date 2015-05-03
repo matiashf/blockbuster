@@ -2,8 +2,7 @@
 #define ARROW_HPP
 
 #include "Ball.hpp"
-
-#include <QGraphicsItem>
+#include "GameItem.hpp"
 #include <QTime>
 
 /** Displays an impulse vector originating from a Ball.
@@ -18,7 +17,7 @@
     available magnitude decreases. Available magnitude is generated at
     at constant rate up to a maximum value.
  */
-class Arrow : public QGraphicsItem {
+class Arrow : public GameItem {
 private:
   QTime regeneration_; // For regenerating available magnitude
   qreal direction; // radians. horizontal right is zero, clockwise is positive.
