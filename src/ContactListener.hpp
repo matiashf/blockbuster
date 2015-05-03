@@ -22,7 +22,7 @@
 
     All user data pointers on b2Body objects MUST be a
     reinterpret_cast from QGraphicsItem* to void*. This holds true in
-    our game (they are set in HasBody only), but it somehow feels
+    our game (they are set in PhysicalItem only), but it somehow feels
     brittle. Maybe the Box2D developers could have provided us with
     something more type safe than void pointers?
 */

@@ -1,7 +1,7 @@
 #ifndef BALL_HPP
 #define BALL_HPP
 
-#include "HasBody.hpp"
+#include "PhysicalItem.hpp"
 #include "HasColor.hpp"
 
 class Arrow;
@@ -14,7 +14,7 @@ class Arrow;
 
     The ball is indestructible.
  */
-class Ball : public HasBody, public HasColor {
+class Ball : public PhysicalItem, public HasColor {
 private:
   qreal radius_;
   Arrow* arrow_;

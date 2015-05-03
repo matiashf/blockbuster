@@ -23,7 +23,7 @@ Box::Box(qreal x, qreal y, qreal width, qreal height, int hue) :
   // mass.
 
   // Determine where the box origin is situated relative to the scene origin
-  HasBody{x + width / 2, y + height / 2},
+  PhysicalItem{x + width / 2, y + height / 2},
   HasColor{QColor::fromHsv(hue, randomSaturation(), kMaxValue)},
   Destructible{kInitialHealth},
   // Determine where the box is drawn relative to its local origin

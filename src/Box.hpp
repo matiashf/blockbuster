@@ -1,7 +1,7 @@
 #ifndef BOX_HPP
 #define BOX_HPP
 
-#include "HasBody.hpp"
+#include "PhysicalItem.hpp"
 #include "HasColor.hpp"
 
 /** A physical, destructible box.
@@ -12,7 +12,7 @@
     When a box has taken enough damage (its health reaches zero), it
     is removed from the scene and deleted.
 */
-class Box : public HasBody, public HasColor, public Destructible {
+class Box : public PhysicalItem, public HasColor, public Destructible {
 private:
   QRectF rect_;
 

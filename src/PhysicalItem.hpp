@@ -20,11 +20,11 @@
     body, the body is owned by the world, and the world is owned by
     the scene. No further memory management is required in this
     class. */
-class HasBody : public QGraphicsItem {
+class PhysicalItem : public QGraphicsItem {
 public:
   /// Places the graphic item at the given scene coordinates
-  HasBody(qreal x, qreal y);
-  virtual ~HasBody();
+  PhysicalItem(qreal x, qreal y);
+  virtual ~PhysicalItem();
 
   inline b2Body* body() { return body_; };
 

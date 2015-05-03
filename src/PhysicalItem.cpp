@@ -1,19 +1,19 @@
-#include "HasBody.hpp"
+#include "PhysicalItem.hpp"
 
 #include <QtMath> // qRadiansToDegrees
 #include <stdexcept> // std::logic_error
 
-HasBody::HasBody(qreal x, qreal y) :
+PhysicalItem::PhysicalItem(qreal x, qreal y) :
   body_{nullptr}
 {
   setPos(x, y);
 }
 
-HasBody::~HasBody() {
+PhysicalItem::~PhysicalItem() {
   // The body is owned by the Box2D world
 }
 
-void HasBody::advance(int phase) {
+void PhysicalItem::advance(int phase) {
   // phase 0: The scene is about to advance
   // phase 1: The scene is advancing
 
@@ -27,7 +27,7 @@ void HasBody::advance(int phase) {
   QGraphicsItem::advance(phase); // Advance children
 }
 
-void HasBody::createBody() {
+void PhysicalItem::createBody() {
   if (body_ != nullptr)
     throw new std::logic_error("A body has already been created.");
   b2BodyDef bodyDef;
@@ -44,14 +44,14 @@ void HasBody::createBody() {
   delete fixtureDef.shape;
 }
 
-void HasBody::destroyBody() {
+void PhysicalItem::destroyBody() {
   if (body_ == nullptr)
     return;  // Not created yet or already destroyed
   gameScene()->world()->DestroyBody(body_);
   body_ = nullptr;
 }
 
-QVariant HasBody::itemChange(GraphicsItemChange change, const QVariant & value) {
+QVariant PhysicalItem::itemChange(GraphicsItemChange change, const QVariant & value) {
   if (change == QGraphicsItem::ItemSceneChange)
     destroyBody();
   if (change == QGraphicsItem::ItemSceneHasChanged and scene() != nullptr)

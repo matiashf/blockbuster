@@ -22,7 +22,7 @@ class Ball;
     When constructed, the scene creates a Box2D world to simulate
     physics. The world gets physical boundries that correspond with
     the scene edges. Physical objects are added to the world in
-    HasBody.
+    the PhysicalItem class.
 
     Note that the reference system used by the scene has x pointing
     right and y pointing *down*. The physical world has the same
