@@ -1,32 +1,64 @@
 #include <gtest/gtest.h>
-#include <QDir>
-#include <QString>
-#include <string> // std::string
+#include <QTextStream>
+#include <QIODevice> // QIODevice::ReadOnly
 
-#include "GameSceneTest.cpp"
+#include "Map.hpp"
 
-/* Use std::string instead of QString to get nicer error
-   messages. QString doesn't play well with the google test framework
-   (which uses c++ output streams) */
+class MapTest : public ::testing::Test {
+protected:
+  QString string;
+  QTextStream stream;
+  Map loader{&stream};
 
-class MapTest : public GameSceneTest,
-                public ::testing::WithParamInterface<std::string> {
-public:
-  static std::vector<std::string> all_maps() {
-    QDir dir{":/maps/"};
-    std::vector<std::string> absolute_paths;
-    for (QFileInfo i : dir.entryInfoList())
-      absolute_paths.push_back(i.absoluteFilePath().toStdString());
-    return absolute_paths;
+  void parse(const char * cstring) {
+    string.clear();
+    string.append(cstring);
+    stream.setString(&string, QIODevice::ReadOnly);
+    loader.parse();
+  }
+
+  void expect_parsed(const QRect& expected) {
+    ASSERT_EQ(1, loader.rects()->size());
+    const QRect& actual = loader.rects()->back();
+    EXPECT_EQ(expected.x(), actual.x());
+    EXPECT_EQ(expected.y(), actual.y());
+    EXPECT_EQ(expected.width(), actual.width());
+    EXPECT_EQ(expected.height(), actual.height());
+  }
+ 
+  void expect_dimensions(int width, int height) {
+    EXPECT_EQ(width, loader.width());
+    EXPECT_EQ(height, loader.height());
   }
 };
 
-INSTANTIATE_TEST_CASE_P(all_maps, MapTest,
-                        ::testing::ValuesIn(MapTest::all_maps()));
+TEST_F(MapTest, single_box_filling_entire_scene) {
+  parse(R"(
+/-\
+|#|
+\-/
+)");
+  expect_parsed(QRect{0, 0, 1, 1});
+  expect_dimensions(1, 1);
+}
 
-TEST_P(MapTest, load) {
-  // Simply load the map. We can't really test for anything else,
-  // because this test gets run for every map. The intention is simply
-  // to avoid shipping maps that crash the game.
-  scene.load(QString{GetParam().c_str()});
+TEST_F(MapTest, single_box_with_whitespace_under_and_after) {
+  parse(R"(
+/--\
+|# |
+|  |
+\--/
+)");
+  expect_parsed(QRect{0, 0, 1, 1});
+  expect_dimensions(2, 2);
+}
+
+TEST_F(MapTest, horizontal_box) {
+  parse(R"(
+/---\
+|#-#|
+\---/
+)");
+  expect_parsed(QRect{0, 0, 3, 1});
+  expect_dimensions(3, 1);
 }

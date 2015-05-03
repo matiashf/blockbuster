@@ -2,7 +2,7 @@
 #include "Ball.hpp"
 #include "Box.hpp"
 #include "Arrow.hpp"
-#include "GameLoader.hpp"
+#include "Map.hpp"
 #include "Player.hpp"
 #include "KeyboardPlayer.hpp"
 
@@ -96,8 +96,8 @@ void GameScene::load(QString map_url) {
   // FIXME: Test that the file opened correctly
   QTextStream stream{&file};
   QFileInfo file_info{map_url};
-  GameLoader loader{&stream, &file_info};
-  loader.load(this);
+  Map map{&stream, &file_info};
+  map.load(this);
   file.close();
 }
 

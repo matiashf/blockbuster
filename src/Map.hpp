@@ -1,5 +1,5 @@
-#ifndef GAME_LOADER_HPP
-#define GAME_LOADER_HPP
+#ifndef MAP_HPP
+#define MAP_HPP
 
 #include <vector> // std::vector
 #include <stdexcept> // std::exception
@@ -11,12 +11,13 @@
 
 class GameScene; // Forward declaration
 
-/** A helper class for parsing and loading map files.
+/** A class that parses a map file and loads it into a GameScene.
 
-    The helper gets called by GameScene::load. This class was created
-    to simplify testing and reduce code duplication.
+    The Map class parses a map file into an intermediate data
+    structure without creating actual QGraphicItem objects. This makes
+    it easier to write unit tests for the parser.
  */
-class GameLoader {
+class Map {
 private:
   QTextStream* stream;
   QFileInfo* file_info;
@@ -30,7 +31,7 @@ private:
   std::exception error(const char*);
   void parse(int x, int y, QChar symbol);
 public:
-  GameLoader(QTextStream* stream, QFileInfo* file_info=nullptr);
+  Map(QTextStream* stream, QFileInfo* file_info=nullptr);
   void load(GameScene* scene);
 
   // Expose some internal structure to allow for testing

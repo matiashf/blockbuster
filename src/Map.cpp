@@ -1,11 +1,11 @@
-#include "GameLoader.hpp"
+#include "Map.hpp"
 #include "GameScene.hpp"
 #include "Box.hpp"
 #include "Ball.hpp"
 
 #include <iostream> // std::cerr
 
-GameLoader::GameLoader(QTextStream* stream_, QFileInfo* file_info_) :
+Map::Map(QTextStream* stream_, QFileInfo* file_info_) :
   stream{stream_},
   file_info{file_info_},
   current{nullptr}
@@ -13,7 +13,7 @@ GameLoader::GameLoader(QTextStream* stream_, QFileInfo* file_info_) :
 }
 
 /** Print a helpful error message and return an exception. */
-std::exception GameLoader::error(const char * description) {
+std::exception Map::error(const char * description) {
   // FIXME: subclass runtime_exception and allow errors to be programmatically examined
   std::cerr << "Error: " << description << std::endl;
   if (file_info != nullptr)
@@ -25,7 +25,7 @@ std::exception GameLoader::error(const char * description) {
 }
 
 /** Parse the given symbol at map position (x, y) */
-void GameLoader::parse(int x, int y, QChar symbol) {
+void Map::parse(int x, int y, QChar symbol) {
   constexpr QChar hash{'#'}, space{' '}, dash{'-'};
 
   if (current != nullptr and ((symbol == dash and x != width() - 1) or (symbol == hash and current->width() > 1))) {
@@ -41,7 +41,7 @@ void GameLoader::parse(int x, int y, QChar symbol) {
 }
 
 /** Parse the overall structure of the map and delegate to parse(x, y, symbol). */
-void GameLoader::parse() {
+void Map::parse() {
   QChar slash{'/'}, backslash{'\\'}, dash{'-'}, bar{'|'};
 
   lineNo = 1;
@@ -110,7 +110,7 @@ void GameLoader::parse() {
   // All lines after the end of the map are ignored
 }
 
-void GameLoader::load(GameScene* scene) {
+void Map::load(GameScene* scene) {
   parse();
   qreal width_scale = scene->width() / width();
   qreal height_scale = scene->height() / height();
