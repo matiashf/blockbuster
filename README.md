@@ -1,4 +1,4 @@
-# Blockbuster - A physics game
+# Blockbuster - a physics game
 
 [C++ programming project](https://github.com/hioa-cs/cpp_v2015/blob/master/prosjektoppgave/prosjektoppgave.md),
 spring 2015. By [Matias Hermanrud Fjeld](http://github.com/matiashf).
