@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <QDir>
 #include <string> // std::string
 
 #include "GameSceneTest.cpp"
@@ -13,10 +12,9 @@ class MapFileTest : public GameSceneTest,
                     public ::testing::WithParamInterface<std::string> {
 public:
   static std::vector<std::string> all_maps() {
-    QDir dir{":/maps/"};
     std::vector<std::string> absolute_paths;
-    for (QFileInfo i : dir.entryInfoList())
-      absolute_paths.push_back(i.absoluteFilePath().toStdString());
+    for (QString s : Map::all())
+      absolute_paths.push_back(s.toStdString());
     return absolute_paths;
   }
 };

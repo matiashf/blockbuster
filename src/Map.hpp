@@ -51,6 +51,11 @@ public:
   inline int height() const { return height_; }
   inline const std::vector<QRect>* rects() const { return &rects_; };
   inline const std::vector<QPoint>* balls() const { return &balls_; };
+
+  /// Returns a list of the urls for all builtin maps
+  static QStringList all();
+  /// Returns the url for a random builtin map
+  static QString random();
 };
 
 #endif

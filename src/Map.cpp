@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QFile>
 #include <algorithm> // std::min
+#include <QDir>
 
 Map::Map(const char* map_url) :
   Map{QString{map_url}}
@@ -175,4 +176,19 @@ void Map::loadInto(GameScene* const scene) const {
       scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
                              r.width() * width_scale, r.height() * height_scale});
   }
+}
+
+QStringList Map::all() {
+  QDir dir{":/maps/"};
+  QStringList maps;
+  for (QFileInfo i : dir.entryInfoList())
+    maps.append(i.absoluteFilePath());
+  return maps;
+}
+
+QString Map::random() {
+  // TODO: Use the new c++-11 random library
+  // FIXME: Do we need to seed?
+  QStringList maps = all();
+  return maps[rand() % maps.size()];
 }
