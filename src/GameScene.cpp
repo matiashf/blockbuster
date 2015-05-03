@@ -22,7 +22,6 @@ const int GameScene::kSceneWidth = kSceneHeight * 16 / 9;
 
 GameScene::GameScene(QObject* parent) :
   QGraphicsScene{0, 0, kSceneWidth, kSceneHeight, parent},
-  ball_{new Ball{width() / 2.0f - 12.5f, 0, 25.0f}},
   timer{new QTimer{this}},
   gravity{0.0f, 9.81f}, // Earth gravity
   world_{gravity},
@@ -45,8 +44,12 @@ GameScene::GameScene(QObject* parent) :
      timeout()-events. Effectively this gives variable frame rate by
      simply dropping frames. */
 
-  addItem(ball());
-  new KeyboardPlayer(this, ball(), Qt::Key_Up, Qt::Key_Down, Qt::Key_Left, Qt::Key_Right, Qt::Key_Space);
+  Ball* b1 = new Ball{0, 0, 25.0f};
+  addItem(b1);
+  new KeyboardPlayer(this, b1, Qt::Key_W, Qt::Key_S, Qt::Key_A, Qt::Key_D, Qt::Key_Space);
+  Ball* b2 = new Ball{width() - 50.0f, 0, 25.0f};
+  addItem(b2);
+  new KeyboardPlayer(this, b2, Qt::Key_Up, Qt::Key_Down, Qt::Key_Left, Qt::Key_Right, Qt::Key_Return);
 }
 
 /** Create a static (non-moving) line between the two points. Used to

@@ -10,8 +10,6 @@
 
 #include "ContactListener.hpp"
 
-class Ball;
-
 /** The graphic scene which owns and paints QGraphicItem instances.
 
     The scene keeps track of game time and can be started, stopped and
@@ -34,8 +32,6 @@ class Ball;
 class GameScene: public QGraphicsScene {
   Q_OBJECT
 private:
-  Ball* ball_;
-
   QTimer* timer; // Periodic event dispatcher
   QTime clock; // For measuring the elapsed time between frames
   qreal timestep_; // Seconds of game time elapsed since the last frame
@@ -76,7 +72,6 @@ public:
   GameScene(QObject* parent=0);
 
   inline b2World* world() { return &world_; }
-  inline Ball* ball() { return ball_; }
 
   // Convenience functions for mapping between world and scene coordinates
   inline float32 mapToWorld(qreal scalar) { return scalar * worldScale; }

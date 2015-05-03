@@ -117,8 +117,8 @@ void GameLoader::load(GameScene* scene) {
 
   for (auto i = rects_.cbegin(); i != rects_.cend(); ++i) {
     const QRect& r = *i;
+    // FIXME: Connect the box to a ball
     scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
-                           r.width() * width_scale, r.height() * height_scale,
-                           scene->ball()->color().hue()});
+                           r.width() * width_scale, r.height() * height_scale});
   }
 }
