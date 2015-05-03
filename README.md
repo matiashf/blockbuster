@@ -61,10 +61,10 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 
 ## Known issues
 
-* The game sporadically occationally does not start, but displays a
-  transparent window. I have not been able to consistently reproduce
-  this or track it down. Fix: Press escape, close the window and run
-  the game again.
+* Sporadically, the game show a transparent window when started. I
+  have not been able to consistently reproduce the cause of this or
+  track it down. Fix: Press escape, close the window and run the game
+  again.
 * If you create maps with the ball at the far right side of the map,
   it can fall outside the world edges.
 * The arrows can be moved even though the game is paused.
