@@ -61,9 +61,10 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 
 ## Known issues
 
-* The game sporadically does not render the window when starting. I
-  have not been able to consistently reproduce this or track it
-  down. Fix: Close the window and run the game again.
+* The game sporadically occationally does not start, but displays a
+  transparent window. I have not been able to consistently reproduce
+  this or track it down. Fix: Press escape, close the window and run
+  the game again.
 * If you create maps with the ball at the far right side of the map,
   it can fall outside the world edges.
 * The arrows can be moved even though the game is paused.
@@ -72,6 +73,13 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 * The game never ends (players have to quit).
 * Only two keyboard players are implemented (although implementing
   more would be straightforward).
+* The game becomes unplayably slow when the screen is filled with boxes.
+* The physics simulation is not deterministic, but it should be. This
+  might be because of frame dropping.
+* Simulation becomes unstable when a lot of weight is stacked upon
+  something. This is a drawback in design of Box2D.
+* Frame dropping is very crude. When the game does not manage to
+  render as 60Hz, it degrades poorly.
 
 # Development
 
