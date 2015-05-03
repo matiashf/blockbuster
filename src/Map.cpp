@@ -2,6 +2,7 @@
 #include "GameScene.hpp"
 #include "Box.hpp"
 #include "Ball.hpp"
+#include "KeyboardPlayer.hpp"
 
 #include <iostream> // std::cerr
 #include <QFileInfo>
@@ -128,6 +129,13 @@ void Map::parse(QTextStream* stream) {
 void Map::loadInto(GameScene& scene) {
   qreal width_scale = scene.width() / width();
   qreal height_scale = scene.height() / height();
+
+  Ball* b1 = new Ball{0, 0, 25.0f};
+  scene.addItem(b1);
+  new KeyboardPlayer(&scene, b1, Qt::Key_W, Qt::Key_S, Qt::Key_A, Qt::Key_D, Qt::Key_Space);
+  Ball* b2 = new Ball{width() - 50.0f, 0, 25.0f};
+  scene.addItem(b2);
+  new KeyboardPlayer(&scene, b2, Qt::Key_Up, Qt::Key_Down, Qt::Key_Left, Qt::Key_Right, Qt::Key_Return);
 
   for (auto i = rects_.cbegin(); i != rects_.cend(); ++i) {
     const QRect& r = *i;

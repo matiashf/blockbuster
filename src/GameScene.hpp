@@ -4,7 +4,6 @@
 #include <QtWidgets/QGraphicsScene>
 #include <QTimer>
 #include <QTime>
-#include <QString>
 
 #include <Box2D.h>
 
