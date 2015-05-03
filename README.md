@@ -36,6 +36,7 @@ vagrant ssh
 cd /vagrant
 qmake
 make test
+```
 
 When switching between the virtual machine and the host, make sure you
 run `make distclean && qmake` to avoid mixing object files compiled in
