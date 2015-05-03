@@ -136,28 +136,43 @@ void Map::loadInto(GameScene* const scene) const {
   qreal ball_radius = std::max(width_scale, height_scale) / 2.0f;
 
   // Balls
-  std::vector<Ball*> ballItems;
-  for (unsigned int i = 0; i < balls()->size(); i++) {
-    const QPoint& point = balls()->at(i);
+  if (balls()->size() > 0) {
+    std::vector<Ball*> ballItems;
+    // Create the first ball
+    const QPoint& point = balls()->at(0);
     ballItems.push_back(new Ball{point.x() * width_scale,
-                                 point.y() * height_scale,
-                                 ball_radius});
+          point.y() * height_scale,
+          ball_radius});
     scene->addItem(ballItems.back());
-  }
+    int base_hue = ballItems.at(0)->color().hue();
+    // Create additional balls with different hues
+    for (unsigned int i = 1; i < balls()->size(); i++) {
+      const QPoint& point = balls()->at(i);
+      int hue = (base_hue + i * 360 / balls()->size()) % 360;
+      ballItems.push_back(new Ball{point.x() * width_scale,
+            point.y() * height_scale,
+            ball_radius,
+            hue});
+      scene->addItem(ballItems.back());
+    }
 
-  // Players
-  if (ballItems.size() > 0)
+    // Players
     new KeyboardPlayer(scene, ballItems.at(0), Qt::Key_Up, Qt::Key_Down,
                        Qt::Key_Left, Qt::Key_Right, Qt::Key_Return);
-  if (ballItems.size() > 1)
-    new KeyboardPlayer(scene, ballItems.at(1),
-                       Qt::Key_W, Qt::Key_S, Qt::Key_A, Qt::Key_D, Qt::Key_Space);
+    if (ballItems.size() > 1)
+      new KeyboardPlayer(scene, ballItems.at(1),
+                         Qt::Key_W, Qt::Key_S, Qt::Key_A, Qt::Key_D, Qt::Key_Space);
 
-  // Boxes
-  for (const QRect& r : rects_) {
-    Ball* ball = ballItems.at(r.x() * ballItems.size() / width_);
-    scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
-                           r.width() * width_scale, r.height() * height_scale,
-                           ball->color().hue()});
+    // Boxes
+    for (const QRect& r : rects_) {
+      Ball* ball = ballItems.at(r.x() * ballItems.size() / width_);
+      scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
+                             r.width() * width_scale, r.height() * height_scale,
+                             ball->color().hue()});
+    }
+  } else { // There are no balls in the map
+    for (const QRect& r : rects_)
+      scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
+                             r.width() * width_scale, r.height() * height_scale});
   }
 }
