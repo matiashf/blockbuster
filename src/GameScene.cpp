@@ -61,9 +61,8 @@ void GameScene::addEdgeLine(QPointF from, QPointF to) {
 }
 
 void GameScene::start() {
-  worldTime.start();
+  clock.start(); // Reset the clock
   timer->start(); // Start calling advance()
-  ball()->arrow()->regeneration()->start(); // Resets timer
 }
 
 void GameScene::stop() {
@@ -78,14 +77,14 @@ void GameScene::toggle() {
 }
 
 void GameScene::advance(qreal milliseconds) {
-  world()->Step(milliseconds / 1000.0f, // The Step function takes seconds
-                kMaxVelocityIterations, kMaxPositionIterations);
+  timestep_ = milliseconds / 1000.0f; // Seconds
+  world()->Step(timestep_, kMaxVelocityIterations, kMaxPositionIterations);
 
   QGraphicsScene::advance(); // Advance items, i.e. update positions and render
 }
 
 void GameScene::advance() {
-  advance(worldTime.restart());
+  advance(clock.restart());
 }
 
 void GameScene::load(QString map_url) {

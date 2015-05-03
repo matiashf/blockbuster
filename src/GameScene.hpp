@@ -17,7 +17,8 @@ class Ball;
     The scene keeps track of game time and can be started, stopped and
     stepped forward. Rendering is managed by the superclass, but
     changes to items are made by a timer periodically calling
-    advance().
+    advance(). Items on the scene call the GameScene::timestep()
+    method to implement time dependent behavior.
 
     When constructed, the scene creates a Box2D world to simulate
     physics. The world gets physical boundries that correspond with
@@ -36,7 +37,8 @@ private:
   Ball* ball_;
 
   QTimer* timer; // Periodic event dispatcher
-  QTime worldTime; // Clock for synchronizing the physics world with real time
+  QTime clock; // For measuring the elapsed time between frames
+  qreal timestep_; // Seconds of game time elapsed since the last frame
 
   /* Use a constraint-based physics engine, like this:
      http://allenchou.net/2013/12/game-physics-constraints-sequential-impulse */
@@ -91,6 +93,9 @@ public:
 
   /// Loads the given map using a GameLoader. Does not clear the scene.
   void load(QString map_url);
+
+  /// Seconds of elapsed game time since the last frame.
+  inline qreal timestep() const { return timestep_; }
 
 public slots:
   void start();

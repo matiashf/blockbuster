@@ -3,7 +3,6 @@
 
 #include "Ball.hpp"
 #include "GameItem.hpp"
-#include <QTime>
 
 /** Displays an impulse vector originating from a Ball.
 
@@ -19,7 +18,6 @@
  */
 class Arrow : public GameItem {
 private:
-  QTime regeneration_; // For regenerating available magnitude
   qreal direction; // radians. horizontal right is zero, clockwise is positive.
   qreal desired_magnitude; // pixel impulses = pixels * kg / second
   qreal available_magnitude; // pixel impulses. Regenerates with time.
@@ -49,8 +47,6 @@ public:
   void increaseDirection(qreal radians);
   /// Increases the magnitude of the arrow up to a constant maximum.
   void increaseMagnitude(qreal difference);
-
-  inline QTime* regeneration() { return &regeneration_; }
 
   /** Returns an impulse vector from the available/desired impulse.
       Decreases the available impulse. */

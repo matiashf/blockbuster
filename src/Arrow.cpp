@@ -29,15 +29,12 @@ void Arrow::advance(int phase) {
   // phase 1: The scene is advancing
   if (phase == 0) return;
 
-  if (available_magnitude >= kMaximumMagnitude) {
-    regeneration_.restart(); // Clear the timer
+  if (available_magnitude >= kMaximumMagnitude)
     return; // Fully regenerated already
-  }
 
   // Regenerate up to maximum
   const qreal rate = kMaximumMagnitude / kRegenerationTime;
-  const qreal seconds = regeneration_.restart() / 1000.0f; // msec timer
-  available_magnitude += rate * seconds;
+  available_magnitude += rate * gameScene()->timestep();
   if (available_magnitude > kMaximumMagnitude)
     available_magnitude = kMaximumMagnitude;
   update(); // Schedule redraw
