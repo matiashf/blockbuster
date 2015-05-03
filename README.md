@@ -10,6 +10,31 @@ make
 bin/blockbuster
 ```
 
+# Playing the game
+
+Each player controls their ball with the keyboard. The objective of
+the game is to destroy the other players boxes (with different colors
+from the ball).
+
+The game does not implement victory or loss conditions. When the two
+players (sitting at the same keyboard) have decided on who won, the
+loser should buy the winner ice cream. Ties must be be decided with
+rock-paper-scissors.
+
+## Controls
+
+Players controls their ball with an impulse vector represented in the
+game as an arrow. They can rotate the arrow left and right, as well as
+increase or decrease the desired impulse. To move the ball the use a
+key to apply the impulse vector to the ball.
+
+The first player uses arrow keys up, down, left, right and enter. The
+second player uses WSAD (like in a shooter game) and space.
+
+Additionally, the game state can be controlled with p pausing and
+unpausing the game, Q quitting, F going to fullscreen, Escape going to
+windowed mode and S stepping forward in time while the game is paused.
+
 ## Generating documentation
 
 ```shell
@@ -27,7 +52,7 @@ qmake
 make test
 ```
 
-## Building and testing on Ubuntu 14.04 with Vagrant
+## Running tests on Ubuntu 14.04 with Vagrant
 
 ```shell
 make distclean
@@ -45,7 +70,7 @@ the different environments.
 Playing the game with virtualbox, the physics simulation becomes
 unstable. This is not dependent on the build environment (a binary
 file that behaves strangely in the virtual environment runs fine when
-not virtualized).
+not virtualized). If you know why, please let me know.
 
 ## Creating your own map
 
@@ -63,31 +88,6 @@ touch resources/maps/mynewmap.txt
 cd resources
 rcc -project | grep -v ./resources.qrc > resources.qrc
 ```
-
-# Playing the game
-
-Each player controls their ball with the keyboard. The objective of
-the game is to destroy the other players boxes (with different colors
-from the ball).
-
-The game does not implement victory or loss conditions. When the two
-players (sitting at the same keyboard) have decided on who won, the
-winner should get ice cream. Ties must be be decided with
-rock-paper-scissors.
-
-## Controls
-
-Players controls their ball with an impulse vector represented in the
-game as an arrow. They can rotate the arrow left and right, as well as
-increase or decrease the desired impulse. To move the ball the use a
-key to apply the impulse vector to the ball.
-
-The first player uses arrow keys up, down, left, right and enter. The
-second player uses WSAD (like in a shooter game) and space.
-
-Additionally, the game state can be controlled with p pausing and
-unpausing the game, Q quitting, F going to fullscreen, Escape going to
-windowed mode and S stepping forward in time while the game is paused.
 
 # Architecture
 
@@ -159,16 +159,10 @@ Arbitrary sized boxes were planned but not implemented. They would
 have looked like this:
 
 ```
-/---\
-|#-#|
-|| ||
-|#-#|
-|   |
-| # |
-| | |
-| # |
-\---/
+#-#           #
+| |           |
+#-#           #
 ```
 
 Box ownership is determined automatically based on box position. Only
-two KeyboardPlayers are supported at the moment (In Map::LoadInto).
+two KeyboardPlayers are supported at the moment (In Map::loadInto).
