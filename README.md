@@ -61,7 +61,7 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 
 ## Known issues
 
-* Sporadically, the game show a transparent window when started. I
+* Sporadically, the game shows a transparent window when started. I
   have not been able to consistently reproduce the cause of this or
   track it down. Fix: Press escape, close the window and run the game
   again.
