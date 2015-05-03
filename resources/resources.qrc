@@ -4,6 +4,7 @@
 <file>./maps/castles.txt</file>
 <file>./maps/catch22.txt</file>
 <file>./maps/falling.txt</file>
+<file>./maps/pyramids.txt</file>
 <file>./maps/stacks.txt</file>
 </qresource>
 </RCC>
