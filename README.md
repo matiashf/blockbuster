@@ -14,7 +14,8 @@ bin/blockbuster
 
 Each player controls their ball with the keyboard. The objective of
 the game is to destroy the other players boxes (the ones having
-different colors than the players ball).
+different colors than the players ball). Balls are indestructible, but
+boxes are not. When the boxes take damage, they darken.
 
 The game does not implement victory or loss conditions. When the two
 players (sitting at the same keyboard) have decided on who won, they
@@ -122,14 +123,8 @@ which the scene is drawn. The class itself does very litte.
 
 The PhysicalItem class represents a grapical item on the scene
 connected with a body in the simulated physics world. The Colored and
-Destructible classes are mixed in to item classes modify their
+Destructible classes are mixed in to item classes to modify their
 behaviour.
-
-## Boxes and balls
-
-Boxes and balls use different colors to represent player
-ownership. The ball is indestructible, but the boxes are not. When the
-boxes take damage, they darken.
 
 ## Box2D
 
@@ -148,7 +143,7 @@ Player classes are event-driven. They receive events from the GameView
 (such as keypresses and -releases), or they can use a QTimer to send
 them timeout events.
 
-## maps
+## Maps
 
 The Map class parses and loads map files. Map files look like this:
 
