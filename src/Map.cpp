@@ -155,8 +155,9 @@ void Map::loadInto(GameScene* const scene) const {
 
   // Boxes
   for (const QRect& r : rects_) {
-    // FIXME: Connect the box to a ball
+    Ball* ball = ballItems.at(r.x() * ballItems.size() / width_);
     scene->addItem(new Box{r.x() * width_scale, r.y() * height_scale,
-                          r.width() * width_scale, r.height() * height_scale});
+                           r.width() * width_scale, r.height() * height_scale,
+                           ball->color().hue()});
   }
 }
