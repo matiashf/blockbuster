@@ -25,7 +25,8 @@ int main(int argc, char *argv[])
     } else if (args.size() == 1) {
       map_url = args.first();
     } else {
-      map_url = Map::random();
+      do map_url = Map::random();
+      while (map_url == ":/maps/blank.txt");
     }
 
     GameScene scene;
