@@ -61,9 +61,9 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 
 ## Known issues
 
-* The game sporadically does not render the window. I have not been
-  able to consistently reproduce this or track it down. Close the
-  window and run the game again.
+* The game sporadically does not render the window when starting. I
+  have not been able to consistently reproduce this or track it
+  down. Fix: Close the window and run the game again.
 * If you create maps with the ball at the far right side of the map,
   it can fall outside the world edges.
 * The arrows can be moved even though the game is paused.
