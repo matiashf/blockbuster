@@ -25,8 +25,8 @@ rock-paper-scissors.
 
 Players controls their ball with an impulse vector represented in the
 game as an arrow. They can rotate the arrow left and right, as well as
-increase or decrease the desired impulse. To move the ball the use a
-key to apply the impulse vector to the ball.
+increase or decrease the desired impulse. To move the ball the player
+hits a key to apply the impulse vector to the ball.
 
 The first player uses arrow keys up, down, left, right and enter. The
 second player uses WSAD (like in a shooter game) and space.
