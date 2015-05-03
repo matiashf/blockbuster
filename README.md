@@ -99,7 +99,7 @@ The game uses Qt, the application framework, and Box2D, a constraint
 based physics engine. Building is done with qmake. Documentation is
 generated with Doxygen. Testing is performed using the GoogleTest
 library. The game is event-driven and uses Qt events, signals, slots
-and timers to control execution flow.
+and timers to control execution flow in a single thread.
 
 ![Class diagram](classes.png)
 
