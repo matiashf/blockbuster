@@ -11,6 +11,11 @@
 
 class GameScene; // Forward declaration
 
+/** A helper class for parsing and loading map files.
+
+    The helper gets called by GameScene::load. This class was created
+    to simplify testing and reduce code duplication.
+ */
 class GameLoader {
 private:
   QTextStream* stream;

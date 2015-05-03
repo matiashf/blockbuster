@@ -12,6 +12,24 @@
 
 class Ball;
 
+/** The graphic scene which owns and paints QGraphicItem instances.
+
+    The scene keeps track of game time and can be started, stopped and
+    stepped forward. Rendering is managed by the superclass, but
+    changes to items are made by a timer periodically calling
+    advance().
+
+    When constructed, the scene creates a Box2D world to simulate
+    physics. The world gets physical boundries that correspond with
+    the scene edges. Physical objects are added to the world in
+    HasBody.
+
+    Note that the reference system used by the scene has x pointing
+    right and y pointing *down*. The physical world has the same
+    orientation and origin as the scene, but measures distance in
+    meters instead of pixels. The mapToWorld and mapFromWorld
+    functions are used to translate from one reference system to the other.
+*/
 class GameScene: public QGraphicsScene {
   Q_OBJECT
 private:
@@ -71,17 +89,20 @@ public:
     return b2Vec2{mapToWorld(x), mapToWorld(y)};
   }
 
-  // Loads the given map using a GameLoader. Does not clear the scene.
+  /// Loads the given map using a GameLoader. Does not clear the scene.
   void load(QString map_url);
 
 public slots:
   void start();
   void stop();
+  /// Stop if running and vice versa
   void toggle();
+  /// Increases game time by the given number of milliseconds and update game state
   void advance(qreal milliseconds);
+  /// Updates game state
   void advance();
 protected:
-  // Delegates events from the view to players
+  /// Delegates events to players
   bool eventFilter(QObject * watched, QEvent * event);
 };
 
