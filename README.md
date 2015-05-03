@@ -4,11 +4,21 @@ C++ programming project spring 2015
 ## Building and running
 
 ```shell
-sudo apt-get install qt5-qmake qtbase5-dev libbox2d-dev qt5-default g++ gdb libgtest-dev
+sudo apt-get install qt5-qmake qtbase5-dev libbox2d-dev qt5-default g++ gdb libgtest-dev doxygen graphviz
 qmake # Generate Makefile
 make
 bin/blockbuster
 ```
+
+## Generating documentation
+
+```shell
+make doc
+# The documentation opens automatically in your browser
+```
+
+Note that `make clean` does not remove generated documentation. To
+remove it, run `rm -rf doc`.
 
 ## Building and testing on Ubuntu 14.04 with vagrant
 
