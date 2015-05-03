@@ -1,8 +1,8 @@
 # Blockbuster - a 2D physics game
 
-[C++ programming project](https://github.com/hioa-cs/cpp_v2015/blob/master/prosjektoppgave/prosjektoppgave.md),
-spring 2015. By [Matias Hermanrud Fjeld](http://github.com/matiashf).
-At the beginning of the project I went through a [prototype
+This was a [C++ programming project](https://github.com/hioa-cs/cpp_v2015/blob/master/prosjektoppgave/prosjektoppgave.md),
+[I](http://github.com/matiashf) worked in in the spring of 2015. At
+the beginning of the project I went through a [prototype
 phase](prototype.md) and wrote a [project description
 (Norwegian)](prosjektbeskrivelse.md).
 
