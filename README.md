@@ -62,7 +62,17 @@ rcc -project | grep -v ./resources.qrc > resources.qrc
 
 ## Known issues
 
-* The game seems to have a sporadic rendering 
+* The game sporadically does not render the window. I have not been
+  able to consistently reproduce this or track it down. Close the
+  window and run the game again.
+* If you create maps with the ball at the far right side of the map,
+  it can fall outside the world edges.
+* The arrows can be moved even though the game is paused.
+* Exceptions from map parsing are not catched. Some information is
+  printed, but the error message can be a little bit confusing.
+* The game never ends (players have to quit).
+* Only two keyboard players are implemented (although implementing
+  more would be straightforward).
 
 # Development
 
