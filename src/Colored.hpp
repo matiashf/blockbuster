@@ -25,10 +25,10 @@
     (to avoid white boxes) and full value. When boxes take damage,
     they darken (i.e. get lower value) down to some minimum (to avoid
     black boxes). */
-class HasColor {
+class Colored {
 public:
   /// Constructs a color by copy constructing from the given color
-  HasColor(const QColor&);
+  Colored(const QColor&);
   /// Returns a const referance to the color
   inline const QColor& color() { return color_; }
   /// Sets the color using copy assignment

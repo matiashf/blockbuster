@@ -12,7 +12,7 @@ Ball::Ball(qreal x, qreal y, qreal radius) :
 
 Ball::Ball(qreal x, qreal y, qreal radius, int hue) :
   PhysicalItem{x + radius, y + radius},
-  HasColor{QColor::fromHsv(hue, kMaxSaturation, kMaxValue)},
+  Colored{QColor::fromHsv(hue, kMaxSaturation, kMaxValue)},
   radius_{radius},
   arrow_{new Arrow{this}}
 {
