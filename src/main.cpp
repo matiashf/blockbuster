@@ -3,13 +3,14 @@
 
 #include "GameScene.hpp"
 #include "GameView.hpp"
+#include "Map.hpp"
 
 int main(int argc, char *argv[])
 {
     QApplication application{argc, argv};
     GameScene scene;
     GameView view{&scene};
-    scene.load(Map{":/maps/stacks.txt"});
+    Map{":/maps/stacks.txt"}.loadInto(scene);
     scene.start();
 
     view.showNormal();
