@@ -13,13 +13,14 @@ bin/blockbuster
 # Playing the game
 
 Each player controls their ball with the keyboard. The objective of
-the game is to destroy the other players boxes (with different colors
-from the ball).
+the game is to destroy the other players boxes (the ones having
+different colors than the players ball).
 
 The game does not implement victory or loss conditions. When the two
-players (sitting at the same keyboard) have decided on who won, the
-loser should buy the winner ice cream. Ties must be be decided with
-rock-paper-scissors.
+players (sitting at the same keyboard) have decided on who won, they
+can start a new game by exiting and starting the game again. After a
+few games, the loser should buy the winner ice cream. Ties must be be
+decided with rock-paper-scissors.
 
 ## Controls
 
@@ -35,14 +36,22 @@ Additionally, the game state can be controlled with p pausing and
 unpausing the game, Q quitting, F going to fullscreen, Escape going to
 windowed mode and S stepping forward in time while the game is paused.
 
-## Generating documentation
+## Creating your own map
 
 ```shell
-make doc # Opens a tab in your browser
+cp resources/maps/blank.txt mymap.txt
+# Edit mymap.txt. Make sure you use insert mode.
+bin/blockbuster mymap.txt
 ```
 
-Note that `make clean` does not remove generated documentation. To
-remove it, run `rm -rf doc`.
+To add new builtin maps (bundled with the executable file), create
+files in the resources directory and regenerate `resources/resources.qrc`.
+
+```shell
+touch resources/maps/mynewmap.txt
+cd resources
+rcc -project | grep -v ./resources.qrc > resources.qrc
+```
 
 ## Running tests
 
@@ -50,6 +59,19 @@ remove it, run `rm -rf doc`.
 qmake
 make test
 ```
+
+## Generating documentation
+
+You can take a look at the [architecture section](#architecture) of
+this file to get an overview, then look at technical documentation and
+source code.
+
+```shell
+make doc # Opens a tab in your browser
+```
+
+Note that `make clean` does not remove generated documentation. To
+remove it, run `rm -rf doc`.
 
 ## Running tests on Ubuntu 14.04 with Vagrant
 
@@ -70,23 +92,6 @@ Playing the game with virtualbox, the physics simulation becomes
 unstable. This is not dependent on the build environment (a binary
 file that behaves strangely in the virtual environment runs fine when
 not virtualized). If you know why, please let me know.
-
-## Creating your own map
-
-```shell
-cp resources/maps/blank.txt mymap.txt
-# Edit mymap.txt. Make sure you use insert mode.
-bin/blockbuster mymap.txt
-```
-
-To add new builtin maps (bundled with the executable file), create
-files in the resources directory and regenerate `resources/resources.qrc`.
-
-```shell
-touch resources/maps/mynewmap.txt
-cd resources
-rcc -project | grep -v ./resources.qrc > resources.qrc
-```
 
 # Architecture
 
