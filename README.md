@@ -5,8 +5,8 @@ This was a [C++ programming project](https://github.com/hioa-cs/cpp_v2015/blob/m
 beginning of the project I went through a [prototype phase](prototype.md)
 and wrote a [project description (Norwegian)](prosjektbeskrivelse.md).
 
-_Update june 2016:_ [Alfred Bratterud](https://github.com/alfred-bratterud) was my C++ lecturer, and graded my project at the end of the semester. He gave it an **A** and offered me a job in [IncludeOS](https://github.com/hioa-cs/IncludeOS), which I happily accepted.
- 
+_Update:_ [Alfred Bratterud](https://github.com/alfred-bratterud), the creator of [IncludeOS](https://github.com/hioa-cs/IncludeOS), was my C++ lecturer. He graded my project at the end of the semester, and gave it an **A**.
+
 ## Building and running
 
 ```shell
